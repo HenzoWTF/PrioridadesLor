@@ -77,7 +77,8 @@ namespace PrioridadesLor.BLL
                 .SingleOrDefault();
         }
 
-        public List<Prioridades> GetList(Expression<Func<Prioridades, bool>> Criterio)
+        
+        public async Task<List<Prioridades>> GetList(Expression<Func<Prioridades, bool>> Criterio)
         {
             return _contexto.Prioridades
                 .AsNoTracking()
