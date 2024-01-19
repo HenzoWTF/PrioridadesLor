@@ -12,7 +12,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddDbContext<Contexto>(options => options.UseSqlite("Data Source=Propiedades.db"));
 builder.Services.AddScoped<PrioridadesBLL>();
-
+builder.Services.AddScoped<ClientesBLL>();
 
 var app = builder.Build();
 

@@ -17,23 +17,23 @@ namespace PrioridadesLor.BLL
 
         public bool Existe(int IdPrioridad)
         {
-            return _contexto.Prioridades.Any(p => p.IdPrioridad == IdPrioridad);
+            return _contexto.prioridades.Any(p => p.IdPrioridad == IdPrioridad);
         }
 
         public bool DescripcionRepetida(string descripcion)
         {
-            return _contexto.Prioridades.Any(p => p.Descripcion == descripcion);
+            return _contexto.prioridades.Any(p => p.Descripcion == descripcion);
         }
 
         private bool Insertar(Prioridades prioridad)
         {
-            _contexto.Prioridades.Add(prioridad);
+            _contexto.prioridades.Add(prioridad);
             return _contexto.SaveChanges() > 0;
         }
 
         public bool Modificar(Prioridades prioridad)
         {
-            var Existe = _contexto.Prioridades.Find(prioridad.IdPrioridad);
+            var Existe = _contexto.prioridades.Find(prioridad.IdPrioridad);
 
             if (Existe != null)
             {
@@ -60,7 +60,7 @@ namespace PrioridadesLor.BLL
 
         public bool Eliminar(Prioridades prioridad)
         {
-            var entidad = _contexto.Prioridades.Find(prioridad.IdPrioridad);
+            var entidad = _contexto.prioridades.Find(prioridad.IdPrioridad);
             if (entidad == null)
             {
                 return false;
@@ -71,7 +71,7 @@ namespace PrioridadesLor.BLL
 
         public Prioridades? Buscar(int IdPrioridad)
         {
-            return _contexto.Prioridades
+            return _contexto.prioridades
                 .Where(p => p.IdPrioridad == IdPrioridad)
                 .AsNoTracking()
                 .SingleOrDefault();
@@ -80,7 +80,7 @@ namespace PrioridadesLor.BLL
         
         public async Task<List<Prioridades>> GetList(Expression<Func<Prioridades, bool>> Criterio)
         {
-            return _contexto.Prioridades
+            return _contexto.prioridades
                 .AsNoTracking()
                 .Where(Criterio)
                 .ToList();
@@ -88,7 +88,7 @@ namespace PrioridadesLor.BLL
 
         public bool Validar()
         {
-            return _contexto.Prioridades != null;
+            return _contexto.prioridades != null;
         }
     }
 }
