@@ -18,6 +18,7 @@ namespace PrioridadesLor.BLL
         public bool Existe(int IdPrioridad)
         {
             return _contexto.prioridades.Any(p => p.IdPrioridad == IdPrioridad);
+            
         }
 
         public bool DescripcionRepetida(string descripcion)
