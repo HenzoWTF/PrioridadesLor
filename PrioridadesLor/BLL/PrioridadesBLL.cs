@@ -15,76 +15,65 @@ namespace PrioridadesLor.BLL
             _contexto = contexto;
         }
 
-        public bool Existe(int IdPrioridad)
+        public async Task<bool> Existe(int IdPrioridad)
         {
-            return _contexto.prioridades.Any(p => p.IdPrioridad == IdPrioridad);
+            return await _contexto.prioridades.AnyAsync(p => p.IdPrioridad == IdPrioridad);
             
         }
 
-        public bool DescripcionRepetida(string descripcion)
+        public async Task<bool>DescripcionRepetida(string descripcion)
         {
-            return _contexto.prioridades.Any(p => p.Descripcion == descripcion);
+            return await _contexto.prioridades.AnyAsync(p => p.Descripcion == descripcion);
         }
 
-        private bool Insertar(Prioridades prioridad)
+        private async Task<bool> Insertar(Prioridades prioridad)
         {
             _contexto.prioridades.Add(prioridad);
-            return _contexto.SaveChanges() > 0;
+            return await _contexto.SaveChangesAsync() > 0;
         }
 
-        public bool Modificar(Prioridades prioridad)
+        public async Task<bool> Modificar(Prioridades prioridad)
         {
-            var Existe = _contexto.prioridades.Find(prioridad.IdPrioridad);
-
-            if (Existe != null)
-            {
-                _contexto.Entry(Existe).CurrentValues.SetValues(prioridad);
-
-                return _contexto.SaveChanges() > 0;
-            }
-
-            return false; 
+           _contexto.Update(prioridad);
+            return await _contexto.SaveChangesAsync() > 0;
 
         }
 
-        public bool Guardar(Prioridades prioridad)
+        public async Task<bool> Guardar(Prioridades prioridad)
         {
-            if (!Existe(prioridad.IdPrioridad) && !DescripcionRepetida(prioridad.Descripcion))
+            if (! await Existe(prioridad.IdPrioridad) && ! await DescripcionRepetida(prioridad.Descripcion))
             {
-                return this.Insertar(prioridad);
+                return await Insertar(prioridad);
             }
             else
             {
-                return this.Modificar(prioridad);
+                return await Modificar(prioridad);
             }
         }
 
-        public bool Eliminar(Prioridades prioridad)
+        public async Task<bool> Eliminar(Prioridades prioridad)
         {
-            var entidad = _contexto.prioridades.Find(prioridad.IdPrioridad);
-            if (entidad == null)
-            {
-                return false;
-            }
-            _contexto.Entry(entidad).State = EntityState.Deleted;
-            return _contexto.SaveChanges() > 0;
+            var entidad = await _contexto.prioridades
+                .Where(p => p.IdPrioridad == prioridad.IdPrioridad)
+                .ExecuteDeleteAsync();
+            
+            return await _contexto.SaveChangesAsync() > 0;
         }
 
-        public Prioridades? Buscar(int IdPrioridad)
+        public async Task<Prioridades?> Buscar(int IdPrioridad)
         {
-            return _contexto.prioridades
-                .Where(p => p.IdPrioridad == IdPrioridad)
+            return await _contexto.prioridades
                 .AsNoTracking()
-                .SingleOrDefault();
+                .FirstOrDefaultAsync(p => p.IdPrioridad ==IdPrioridad);
         }
 
         
         public async Task<List<Prioridades>> GetList(Expression<Func<Prioridades, bool>> Criterio)
         {
-            return _contexto.prioridades
+            return await _contexto.prioridades
                 .AsNoTracking()
                 .Where(Criterio)
-                .ToList();
+                .ToListAsync();
         }
 
         public bool Validar()

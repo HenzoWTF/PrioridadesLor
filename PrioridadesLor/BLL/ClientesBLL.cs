@@ -49,7 +49,7 @@ namespace PrioridadesLor.BLL
             return cantidad > 0;
         }
 
-        public async Task<Cliente> Buscar(int ClienteID)
+        public async Task<Cliente?> Buscar(int ClienteID)
         {
             return await _contexto.clientes
                 .AsNoTracking()

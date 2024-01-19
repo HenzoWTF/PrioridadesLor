@@ -72,17 +72,17 @@
     {
         if (IdPrioridad > 0)
         {
-            this.prioridades.IdPrioridad = IdPrioridad;
-            this.Buscar();
+            prioridades.IdPrioridad = IdPrioridad;
+            Buscar();
         }
     }
 
-    public void Buscar()
+    public async void Buscar()
     {
-        var prioridadEncontrada = prioridadesBLL.Buscar(prioridades.IdPrioridad);
+        var prioridadEncontrada = await prioridadesBLL.Buscar(prioridades.IdPrioridad);
         if (prioridadEncontrada != null)
         {
-            this.prioridades = prioridadEncontrada;
+            prioridades = prioridadEncontrada;
         }
         else
         {
@@ -94,7 +94,7 @@
 
     public void Nuevo()
     {
-        this.prioridades = new Prioridades();
+        prioridades = new Prioridades();
     }
 
     public void Repetido()
@@ -105,11 +105,11 @@
         }
         if (prioridades.Descripcion == prioridades.Descripcion)
         {
-            this.Eliminar();
+            Eliminar();
         }
     }
 
-    public void Guardar()
+    public async void Guardar()
     {
         if (string.IsNullOrWhiteSpace(prioridades.Descripcion))
         {
@@ -123,10 +123,10 @@
             this.Nuevo();
         }
 
-        if (prioridadesBLL.Guardar(this.prioridades))
+        if (await prioridadesBLL.Guardar(prioridades))
         {
             Mensaje ="Se guardo exitosamente";
-            this.Nuevo();
+            Nuevo();
 
         }
     }
@@ -136,13 +136,13 @@
         return prioridades.Descripcion != null && prioridades.DiasCompromiso > 0 && prioridades.DiasCompromiso <= 32;
     }
 
-    public void Eliminar()
+    public async void Eliminar()
     {
         Buscar();
-        if (prioridadesBLL.Eliminar(this.prioridades))
+        if (await prioridadesBLL.Eliminar(prioridades))
         {
             Mensaje = "Se elimino exitosamente";
-            this.Nuevo();
+            Nuevo();
         }
     }
 }
