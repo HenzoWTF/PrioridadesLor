@@ -2,6 +2,144 @@
 
 @rendermode InteractiveServer
 
+@inject ClientesBLL clientesBLL
+@inject NavigationManager navigationManager
+
+<PageTitle>Clientes</PageTitle>
+
+<EditForm Model="clientes" OnInvalidSubmit="Guardar"> <DataAnnotationsValidator/>
+    <a href="/Inicio" class="btn btn-outline-primary">Inicio</a>
+
+    <div class= "container" >
+        <div class= "card shadow-lg" >
+            <div class= "card-header" >
+                <h3> Registro de Propiedades</h3>
+
+                <div class=card-body>
+
+                    @*Clientes ID*@
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <label>ID</label>
+                        <div class="input-group mb-3">
+                            <InputNumber @bind-Value="clientes.ClientesID" class=" form-control" aria-describedby="BotonBuscar" />
+                            <button @onclick="Buscar" class=" btn btn-outline-primary" type="button" id="BotonBuscar"><i class=" bi bi-search"></i></button>
+                        </div>
+                    </div>
+
+                    @*Nombre*@
+                    <label>Nombre</label>
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="clientes.NombreCliente" class=" form-control" />
+                        <ValidationMessage For="@(() => clientes.NombreCliente)" />
+                    </div>
+
+                    @*Telefono*@
+                    <label>Telefono</label>
+                    <div class="input-group mb-3">
+                        <InputText type="cel" @bind-Value="clientes.TelefonoCliente" class=" form-control" aria-describedby="TelefonoCliente" placeholder ="Telefono"/>
+                        <ValidationMessage For="@(() => clientes.TelefonoCliente)"/>
+                    </div>
+
+                    @*Celular*@
+                    <label>Celular</label>
+                    <div class="input-group mb-3">
+                        <InputText type="cel" @bind-Value="clientes.CelularCliente" class="form-control" aria-describedby="CelularCliente" placeholder ="Celular"/>
+                        <ValidationMessage For="@(() => clientes.CelularCliente)"/>
+                    </div>
+
+                    @*RNC*@
+
+                    <label>RNC</label>
+                    <div class="input-group mb-3">
+                        <InputText type="cel" @bind-Value="clientes.RNC" class="form-control" aria-describedby="RNC" placeholder ="RNC"/>
+                        <ValidationMessage For="@(() => clientes.RNC)"/>
+                    </div>
+
+                    @*Email*@
+                    <label>Email</label>
+                    <div class="input-group mb-3">
+                        <InputText type="email" @bind-Value="clientes.EmailCliente" class="form-control" aria-describedby="Email" placeholder ="Email"/>
+                    </div>
+
+                    @*Direccion*@
+                    <label>Dirección</label>
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="clientes.DireccionCliente" class="form-control" aria-describedby="Direccion" placeholder="Direccion"/>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        @Mensaje
+    </div>
 
 
-<h3>Hola Mundo</h3>
+</EditForm>
+
+
+@code{
+    public Cliente clientes { get; set; } = new Cliente();
+    public int clientesID { get; set; }
+    public string ValidarRNC { get; set; }
+    public string Mensaje {get; set;} = "";
+
+    protected override void OnInitialized()
+    {
+        if(clientesID > 0)
+        {
+            clientes.ClientesID = clientesID;
+        }
+    }
+
+    public void Nuevo()
+    {
+        clientes = new Cliente();
+    }
+
+    public async void Guardar()
+    {
+        if (string.IsNullOrEmpty(clientes.RNC) ||
+        string.IsNullOrEmpty(clientes.EmailCliente) ||
+        string.IsNullOrEmpty(clientes.DireccionCliente) ||
+        string.IsNullOrWhiteSpace(clientes.NombreCliente) ||
+        string.IsNullOrWhiteSpace(clientes.CelularCliente) ||
+        string.IsNullOrWhiteSpace(clientes.TelefonoCliente))
+        {
+            Mensaje = "Es obligatorio llenar todos los campos";
+            return;
+        }
+
+        if (clientesBLL.ExisteD(clientes) == false)
+            Nuevo();
+
+        if(await clientesBLL.Guardar(clientes))
+        {
+            Mensaje = "Se guardo correctamente";
+        }
+
+        //navigationManager.NavigateTo("/registroClientes");
+    }
+
+    public async void Buscar()
+    {
+        var clienteEncontrado = await clientesBLL.Buscar(clientes.ClientesID);
+        if (clienteEncontrado != null)
+            clientes = clienteEncontrado;
+        else
+        {
+            Mensaje = "Este ID esta vacio";
+            Nuevo();
+        }
+    }
+
+    public async void Eliminar()
+    {
+        Buscar();
+        if(await clientesBLL.Eliminar(clientes))
+        {
+            Mensaje = "Se elimino correctamente";
+            return;
+        }
+    }
+}

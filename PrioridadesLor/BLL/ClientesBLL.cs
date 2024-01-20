@@ -62,6 +62,20 @@ namespace PrioridadesLor.BLL
         }
 
 
+        public bool ExisteD(Cliente cliente)
+        {
+            var mismosDatos = _contexto.clientes.Any(c => c.NombreCliente == cliente.NombreCliente || c.RNC == cliente.RNC);
+            if (mismosDatos)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
     }
 }
 
