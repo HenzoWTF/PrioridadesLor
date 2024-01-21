@@ -7,7 +7,7 @@
 
 <PageTitle>Clientes</PageTitle>
 
-<EditForm Model="clientes" OnInvalidSubmit="Guardar"> <DataAnnotationsValidator/>
+<EditForm Model="clientes" OnValidSubmit="Guardar"> <DataAnnotationsValidator/>
     <a href="/Inicio" class="btn btn-outline-primary">Inicio</a>
 
     <div class= "container" >
@@ -67,6 +67,16 @@
                         <InputText @bind-Value="clientes.DireccionCliente" class="form-control" aria-describedby="Direccion" placeholder="Direccion"/>
                     </div>
                     
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-primary" @onclick="Nuevo"><i class="bi bi-file-earmark"/>Nuevo</button>
+                            <button type="submit" class="btn btn-outline-success"><i class="bi bi-floppy" /> Guardar</button>
+                            <button type="button" class="btn btn-outline-danger" @onclick="Eliminar"><i class="bi bi-trash"/>Eliminar</button>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -97,7 +107,7 @@
         clientes = new Cliente();
     }
 
-    public async void Guardar()
+    public async Task Guardar()
     {
         if (string.IsNullOrEmpty(clientes.RNC) ||
         string.IsNullOrEmpty(clientes.EmailCliente) ||
@@ -116,9 +126,10 @@
         if(await clientesBLL.Guardar(clientes))
         {
             Mensaje = "Se guardo correctamente";
+            Nuevo();
         }
 
-        //navigationManager.NavigateTo("/registroClientes");
+        navigationManager.NavigateTo("/Rcliente");
     }
 
     public async void Buscar()
@@ -141,5 +152,7 @@
             Mensaje = "Se elimino correctamente";
             return;
         }
+
+        navigationManager.NavigateTo("/Rcliente");
     }
 }
