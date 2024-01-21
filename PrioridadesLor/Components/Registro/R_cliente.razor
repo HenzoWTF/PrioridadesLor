@@ -8,7 +8,7 @@
 <PageTitle>Clientes</PageTitle>
 
 <EditForm Model="clientes" OnValidSubmit="Guardar"> <DataAnnotationsValidator/>
-    <a href="/Inicio" class="btn btn-outline-primary">Inicio</a>
+    <a href="" class="btn btn-outline-primary">Inicio</a>
 
     <div class= "container" >
         <div class= "card shadow-lg" >
@@ -23,6 +23,7 @@
                         <div class="input-group mb-3">
                             <InputNumber @bind-Value="clientes.ClientesID" class=" form-control" aria-describedby="BotonBuscar" />
                             <button @onclick="Buscar" class=" btn btn-outline-primary" type="button" id="BotonBuscar"><i class=" bi bi-search"></i></button>
+                            <ValidationMessage For="@(() => clientes.ClientesID)" />
                         </div>
                     </div>
 
@@ -91,7 +92,6 @@
 @code{
     public Cliente clientes { get; set; } = new Cliente();
     public int clientesID { get; set; }
-    public string ValidarRNC { get; set; }
     public string Mensaje {get; set;} = "";
 
     protected override void OnInitialized()
@@ -107,7 +107,7 @@
         clientes = new Cliente();
     }
 
-    public async Task Guardar()
+    public async void Guardar()
     {
         if (string.IsNullOrEmpty(clientes.RNC) ||
         string.IsNullOrEmpty(clientes.EmailCliente) ||
@@ -127,6 +127,10 @@
         {
             Mensaje = "Se guardo correctamente";
             Nuevo();
+        }
+        else
+        {
+            Mensaje = "Hubo un error en guardar el cliente";
         }
 
         navigationManager.NavigateTo("/Rcliente");
@@ -150,6 +154,7 @@
         if(await clientesBLL.Eliminar(clientes))
         {
             Mensaje = "Se elimino correctamente";
+            Nuevo();
             return;
         }
 

@@ -1,0 +1,47 @@
+﻿@page "/Consulta_Prioridades"
+
+@rendermode InteractiveServer
+@inject PrioridadesBLL prioridadesBLL
+
+<PageTitle>Consulta de Prioridades</PageTitle>
+
+<h1>Consulta de Prioridades</h1>
+
+
+<div>
+    <a href="RegistroP"><i>Agregar Prioridad</i></a>
+</div>
+
+<table class="table">
+    @*Cabecera de la tabla Prioridad*@
+    <thead>
+        <tr bgcolor="skyblue">
+            <th>Id Prioridades</th>
+            <th>Descripción</th>
+            <th>Días Compromiso</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @*Cuerpo de la tabla*@
+        @foreach (var Prioridades in prioridades)
+        {
+            <tr>
+                <td>@Prioridades.IdPrioridad</td>
+                <td>@Prioridades.Descripcion</td>
+                <td>@Prioridades.DiasCompromiso</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+
+@code {
+    public List<Prioridades> prioridades { get; set; } = new List<Prioridades>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        prioridades = await prioridadesBLL.GetList(c => true);
+    }
+}

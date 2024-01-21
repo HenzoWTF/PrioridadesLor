@@ -1,7 +1,55 @@
 ﻿@page "/Consulta_Cliente"
 
 @rendermode InteractiveServer
+@inject ClientesBLL clientesBLL
+
+<PageTitle>Consulta de Clientes</PageTitle>
+
+<h1>Consulta de Clientes</h1>
 
 
+<div>
+    <a href="Rcliente"><i>Agregar Cliente</i></a>
+</div>
 
-<h3>Hola Mundo, consulta cliente</h3>
+<table class="table">
+    @*Cabecera de la tabla cliente*@
+    <thead>
+        <tr bgcolor="skyblue">
+            <th> Id Cliente</th>
+            <th>Nombre</th>
+            <th>Telefono</th>
+            <th>Celular</th>
+            <th>RNC</th>
+            <th>Email</th>
+            <th>Dirección</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @*Cuerpo de la tabla*@
+        @foreach (var Clientes in clientes)
+        {
+            <tr>
+                <td>@Clientes.ClientesID</td>
+                <td>@Clientes.NombreCliente</td>
+                <td>@Clientes.TelefonoCliente</td>
+                <td>@Clientes.CelularCliente</td>
+                <td>@Clientes.RNC</td>
+                <td>@Clientes.EmailCliente</td>
+                <td>@Clientes.DireccionCliente</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+
+@code {
+    public List<Cliente> clientes { get; set; } = new List<Cliente>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        clientes = await clientesBLL.Listar(c => true);
+    }
+}
