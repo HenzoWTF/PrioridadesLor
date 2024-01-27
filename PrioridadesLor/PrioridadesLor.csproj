@@ -14,8 +14,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\NewFolder\" />
-  </ItemGroup>
-
 </Project>

@@ -1,7 +1,8 @@
 ﻿@page "/Consulta_Cliente"
 
 @rendermode InteractiveServer
-@inject ClientesBLL clientesBLL
+@inject ClientesServices clientesServices
+@inject NavigationManager navigationManager
 
 <PageTitle>Consulta de Clientes</PageTitle>
 
@@ -9,12 +10,12 @@
 
 
 <div>
-    <a href="Rcliente"><i>Agregar Cliente</i></a>
+    <a href="/Cliente">Crear Cliente</a>
 </div>
 
 <table class="table">
     @*Cabecera de la tabla cliente*@
-    <thead>
+    <thead class="table-primary">
         <tr bgcolor="skyblue">
             <th> Id Cliente</th>
             <th>Nombre</th>
@@ -22,24 +23,37 @@
             <th>Celular</th>
             <th>RNC</th>
             <th>Email</th>
-            <th>Dirección</th>
+            <th>Direcci&oacuten</th>
         </tr>
     </thead>
 
-    <tbody>
-        @*Cuerpo de la tabla*@
-        @foreach (var Clientes in clientes)
-        {
-            <tr>
-                <td>@Clientes.ClientesID</td>
-                <td>@Clientes.NombreCliente</td>
-                <td>@Clientes.TelefonoCliente</td>
-                <td>@Clientes.CelularCliente</td>
-                <td>@Clientes.RNC</td>
-                <td>@Clientes.EmailCliente</td>
-                <td>@Clientes.DireccionCliente</td>
-            </tr>
+    <tbody class="table-sm">
 
+        @if (clientes.Count == 0)
+        {
+            @: No existe registros
+        }
+        else
+        {
+
+            @*Cuerpo de la tabla*@
+            @foreach (var Clientes in clientes)
+            {
+                <tr>
+                    <td>@Clientes.ClientesID</td>
+                    <td>@Clientes.NombreCliente</td>
+                    <td>@Clientes.TelefonoCliente</td>
+                    <td>@Clientes.CelularCliente</td>
+                    <td>@Clientes.RNC</td>
+                    <td>@Clientes.EmailCliente</td>
+                    <td>@Clientes.DireccionCliente</td>
+                    <td>
+                        <a href="/Cliente/@Clientes.ClientesID"><i class="bi bi-pencil-square" /></a>
+                        <a href="/Eliminar_CLiente/@Clientes.ClientesID" class="link-danger"><i class="bi bi-trash" /></a>
+                    </td>
+                </tr>
+
+            }
         }
     </tbody>
 </table>
@@ -47,9 +61,26 @@
 
 @code {
     public List<Cliente> clientes { get; set; } = new List<Cliente>();
+    public Cliente ClientesC { get; set; } = new Cliente();
 
     protected override async Task OnInitializedAsync()
     {
-        clientes = await clientesBLL.Listar(c => true);
+        clientes = await clientesServices.Listar(c => true);
+    }
+
+    public async void Buscar()
+    {
+        var clienteEncontrado = await clientesServices.Buscar(ClientesC.ClientesID);
+        if (clienteEncontrado != null)
+            ClientesC = clienteEncontrado;
+        else
+        {
+            Nuevo();
+        }
+    }
+
+    public void Nuevo()
+    {
+        ClientesC = new Cliente();
     }
 }

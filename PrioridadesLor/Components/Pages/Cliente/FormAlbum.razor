@@ -1,0 +1,130 @@
+﻿@page "/Cliente"
+@page "/Cliente/{Id:int}"
+
+
+@rendermode InteractiveServer
+
+@inject ClientesServices clientesServices
+@inject NavigationManager navigationManager
+
+<PageTitle>Clientes</PageTitle>
+
+
+<EditForm Model="@clientes" OnValidSubmit="@OnValidSubmit">
+
+    <DataAnnotationsValidator />   <DataAnnotationsValidator />
+    <a href="" class="btn btn-outline-primary">Inicio</a>
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3> Registro de Cliente</h3>
+
+                <div class=card-body>
+
+                    @*Clientes ID*@
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <label>ID</label>
+                        <div class="input-group mb-3">
+                            <InputNumber @bind-Value="@clientes.ClientesID" class=" form-control" aria-describedby="BotonBuscar" />
+                            <ValidationMessage For="@(() => clientes.ClientesID)" />
+                        </div>
+                    </div>
+
+                    @*Nombre*@
+                    <label>Nombre</label>
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="@clientes.NombreCliente" class=" form-control" />
+                        <ValidationMessage For="@(() => clientes.NombreCliente)" />
+                    </div>
+
+                    @*Telefono*@
+                    <label>Telefono</label>
+                    <div class="input-group mb-3">
+                        <InputText type="cel" @bind-Value="@clientes.TelefonoCliente" class=" form-control" aria-describedby="TelefonoCliente" placeholder="Telefono" />
+                        <ValidationMessage For="@(() => clientes.TelefonoCliente)" />
+                    </div>
+
+                    @*Celular*@
+                    <label>Celular</label>
+                    <div class="input-group mb-3">
+                        <InputText type="cel" @bind-Value="@clientes.CelularCliente" class="form-control" aria-describedby="CelularCliente" placeholder="Celular" />
+                        <ValidationMessage For="@(() => clientes.CelularCliente)" />
+                    </div>
+
+                    @*RNC*@
+
+                    <label>RNC</label>
+                    <div class="input-group mb-3">
+                        <InputText type="cel" @bind-Value="@clientes.RNC" class="form-control" aria-describedby="RNC" placeholder="RNC" />
+                        <ValidationMessage For="@(() => clientes.RNC)" />
+                    </div>
+
+                    @*Email*@
+                    <label>Email</label>
+                    <div class="input-group mb-3">
+                        <InputText type="email" @bind-Value="@clientes.EmailCliente" class="form-control" aria-describedby="Email" placeholder="Email" />
+                    </div>
+
+                    @*Direccion*@
+                    <label>Direcci&oacuten</label>
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="@clientes.DireccionCliente" class="form-control" aria-describedby="Direccion" placeholder="Dirección" />
+                    </div>
+
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <button class="btn btn-outline-success">@TextoBoton</button>
+                            <a href="Consulta_Cliente" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</EditForm>
+
+
+@code {
+    [Parameter] public int Id { get; set; }
+    public Cliente clientes { get; set; } = new Cliente();
+    string TextoBoton = string.Empty;
+    string Titulo = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != 0)
+        {
+            clientes = await clientesServices.Buscar(Id);
+            TextoBoton = "Actualizar Cliente";
+            Titulo = "Editar Cliente";
+        }
+        else
+        {
+            TextoBoton = "Crear Cliente";
+            Titulo = "Nuevo Cliente";
+        }
+    }
+
+    public void Nuevo()
+    {
+        clientes = new Cliente();
+    }
+
+    private async void OnValidSubmit()
+    {
+
+        if (await clientesServices.Guardar(clientes))
+        {
+            Nuevo();
+        }
+
+        navigationManager.NavigateTo("Consulta_Cliente");
+    }
+
+}

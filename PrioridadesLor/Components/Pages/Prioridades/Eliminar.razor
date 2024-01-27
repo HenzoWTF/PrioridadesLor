@@ -1,0 +1,101 @@
+﻿@page "/Eliminar_Prioridad"
+@page "/Eliminar_Prioridad/{id:int}"
+
+@rendermode InteractiveServer
+@inject PrioridadesServices prioridadesServices
+@inject NavigationManager navigationManager
+
+
+
+
+<EditForm Model="@prioridades" OnValidSubmit="@OnValidSubmit">
+
+    <DataAnnotationsValidator />   <DataAnnotationsValidator />
+    <a href="" class="btn btn-outline-primary">Inicio</a>
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3> Eliminar Cliente</h3>
+
+                <div class=card-body>
+
+                    @*Prioridad ID*@
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <h2>
+                            <strong>ID:</strong>
+                            @prioridades.IdPrioridad
+                        </h2>
+                    </div>
+
+                    @*Descipcion*@
+                    <h2>
+                        <strong>Descripci&oacuten: </strong>
+                        @prioridades.Descripcion
+                    </h2>
+
+                    @*Dias Compromiso*@
+                    <h2>
+                        <strong>D&iacuteas compromiso </strong>
+                        @prioridades.DiasCompromiso
+
+                    </h2>
+
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <button class="btn btn-outline-danger">@TextoBoton</button>
+                            <a href="Consulta_Prioridades" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</EditForm>
+
+
+
+
+
+
+@code {
+    [Parameter] public int id { get; set; }
+    public Prioridades prioridades = new Prioridades();
+    string TextoBoton = string.Empty;
+    string titulo = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id != 0)
+        {
+            prioridades = await prioridadesServices.Buscar(id);
+            TextoBoton = "Eliminar";
+            titulo = "Eliminar Cliente";
+        }
+        else
+        {
+            TextoBoton = "Crear Cliente";
+            titulo = "Nuevo Cliente";
+        }
+    }
+
+    public void Nuevo()
+    {
+        prioridades = new Prioridades();
+    }
+
+    private async void OnValidSubmit()
+    {
+        if (id != 0)
+        {
+            await prioridadesServices.Eliminar(prioridades);
+            Nuevo();
+        }
+        navigationManager.NavigateTo("Consulta_Prioridades");
+    }
+}
