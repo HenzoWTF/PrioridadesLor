@@ -1,7 +1,7 @@
 ﻿@page "/Consulta_Cliente"
 
 @rendermode InteractiveServer
-@inject ClientesBLL clientesBLL
+@inject ClientesServices clientesServices
 @inject NavigationManager navigationManager
 
 <PageTitle>Consulta de Clientes</PageTitle>
@@ -10,7 +10,7 @@
 
 
 <div>
-    <a href="Rcliente"><i>Agregar Cliente</i></a>
+    <a href="/Cliente">Crear Cliente</a>
 </div>
 
 <table class="table">
@@ -47,33 +47,30 @@
                     <td>@Clientes.RNC</td>
                     <td>@Clientes.EmailCliente</td>
                     <td>@Clientes.DireccionCliente</td>
-
                     <td>
-                        <a href="editar-cliente/@Clientes.ClientesID" class="bi bi-pencil-square"></a>
-                        <a type="button" class="btn btn-outline-danger" @onclick="Eliminar"><i class="bi bi-trash" /></a>
+                        <a href="/Cliente/@Clientes.ClientesID"><i class="bi bi-pencil-square" /></a>
+                        <a href="/Eliminar_CLiente/@Clientes.ClientesID" class="link-danger"><i class="bi bi-trash" /></a>
                     </td>
                 </tr>
 
             }
         }
-
-        
     </tbody>
 </table>
 
 
 @code {
     public List<Cliente> clientes { get; set; } = new List<Cliente>();
-    public Cliente ClientesC { get; set; } = new Cliente(); 
+    public Cliente ClientesC { get; set; } = new Cliente();
 
     protected override async Task OnInitializedAsync()
     {
-        clientes = await clientesBLL.Listar(c => true);
+        clientes = await clientesServices.Listar(c => true);
     }
 
     public async void Buscar()
     {
-        var clienteEncontrado = await clientesBLL.Buscar(ClientesC.ClientesID);
+        var clienteEncontrado = await clientesServices.Buscar(ClientesC.ClientesID);
         if (clienteEncontrado != null)
             ClientesC = clienteEncontrado;
         else
@@ -85,10 +82,5 @@
     public void Nuevo()
     {
         ClientesC = new Cliente();
-    }
-
-    public async void Eliminar()
-    {
-        navigationManager.NavigateTo("/Eliminar_CLiente");
     }
 }

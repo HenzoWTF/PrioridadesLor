@@ -14,9 +14,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\NewFolder\" />
-    <Folder Include="Components\Registro\" />
-  </ItemGroup>
-
 </Project>

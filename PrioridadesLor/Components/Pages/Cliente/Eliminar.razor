@@ -1,7 +1,126 @@
 ﻿@page "/Eliminar_CLiente"
+@page "/Eliminar_CLiente/{Id:int}"
 
-<h3>Eliminar</h3>
+@rendermode InteractiveServer
+
+@inject ClientesServices clientesServices
+@inject NavigationManager navigationManager
+
+
+<PageTitle>Eliminar Clientes</PageTitle>
+
+<EditForm Model="@clientes" OnValidSubmit="@OnValidSubmit">
+
+    <DataAnnotationsValidator />   <DataAnnotationsValidator />
+    <a href="" class="btn btn-outline-primary">Inicio</a>
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3> Eliminar Cliente</h3>
+
+                <div class=card-body>
+
+                    @*Clientes ID*@
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <h2>
+                            <strong>ID:</strong>
+                            @clientes.ClientesID
+                        </h2>
+                    </div>
+
+                    @*Nombre*@
+                    <h2>
+                        <strong>Nombre: </strong>
+                        @clientes.NombreCliente
+                    </h2>
+
+                    @*Telefono*@
+                    <h2>
+                        <strong>Telefono: </strong>
+                        @clientes.TelefonoCliente
+
+                    </h2>
+
+                    @*Celular*@
+                    <h2>
+                        <strong>Celular: </strong>
+                        @clientes.CelularCliente
+                    </h2>
+
+                    @*RNC*@
+                    <h2>
+                        <strong>RNC: </strong>
+                        @clientes.RNC
+                    </h2>
+
+                    @*Email*@
+                    <h2>
+                        <strong>Email: </strong>
+                        @clientes.EmailCliente
+                    </h2>
+
+                    @*Direccion*@
+                    <h2>
+                        <strong>Direcci&oacuten: </strong>
+                        @clientes.DireccionCliente
+                    </h2>
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <button class="btn btn-outline-danger">@TextoBoton</button>
+                            <a href="Consulta_Cliente" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</EditForm>
+
 
 @code {
-    
+    [Parameter] public int Id { get; set; }
+    public Cliente clientes { get; set; } = new Cliente();
+    string TextoBoton = string.Empty;
+    string Titulo = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+
+        if (Id != 0)
+        {
+            clientes = await clientesServices.Buscar(Id);
+            TextoBoton = "Eliminar";
+            Titulo = "Eliminar Cliente";
+        }
+        else
+        {
+            TextoBoton = "Crear Cliente";
+            Titulo = "Nuevo Cliente";
+        }
+    }
+
+    public void Nuevo()
+    {
+        clientes = new Cliente();
+    }
+
+    private async void OnValidSubmit()
+    {
+
+
+        if (Id != 0)
+        {
+            await clientesServices.Eliminar(clientes);
+            Nuevo();
+        }
+
+        navigationManager.NavigateTo("Consulta_Cliente");
+    }
 }

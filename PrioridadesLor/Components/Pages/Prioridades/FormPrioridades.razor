@@ -1,0 +1,100 @@
+﻿@page "/Prioridad"
+@page "/Prioridad/{id:int}"
+
+@rendermode InteractiveServer
+
+@inject PrioridadesServices prioridadesBLL
+@inject NavigationManager navigationManager
+
+<PageTitle>Prioridad</PageTitle>
+
+
+<EditForm Model="@prioridades" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator /><DataAnnotationsValidator />
+
+    <a href="" class="btn btn-outline-primary">Inicio</a>
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3>Registro de Prioriodad</h3>
+
+                <div class="card-body">
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <label>ID</label>
+                        <div class="input-group mb-3">
+                            <InputNumber @bind-Value="@prioridades.IdPrioridad" class=" form-control" />
+                            <ValidationMessage For="@(() => prioridades.IdPrioridad)" />
+                        </div>
+                    </div>
+
+
+                    <label>Descripci&oacuten</label>
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="@prioridades.Descripcion" class=" form-control" />
+                        <ValidationMessage For="@(() => prioridades.Descripcion)" />
+                    </div>
+
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <label>D&iacuteas compromiso</label>
+                        <div class="input-group mb-3">
+                            <InputNumber @bind-Value="@prioridades.DiasCompromiso" class=" form-control" />
+                            <ValidationMessage For="@(() => prioridades.DiasCompromiso)" />
+                        </div>
+                    </div>
+
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <button class="btnn btn-outline-success">@TextoBoton</button>
+                            <a href="Consulta_Prioridades" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /></a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</EditForm>
+
+@code {
+    [Parameter]public int id { get; set; }
+    public Prioridades prioridades = new Prioridades();
+    string TextoBoton = string.Empty;
+    string titulo = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id != 0)
+        {
+            prioridades = await prioridadesBLL.Buscar(id);
+            TextoBoton = "Actualizar Prioridad";
+            titulo = "Editar Prioridad";
+        }
+        else
+        {
+            TextoBoton = "Crear prioridad";
+            titulo = "Nueva prioridad";
+        }
+    }
+
+    public void Nuevo()
+    {
+        prioridades = new Prioridades();
+    }
+
+    private async void OnValidSubmit()
+    {
+        if(await prioridadesBLL.Guardar(prioridades))
+        {
+            Nuevo();
+        }
+
+        navigationManager.NavigateTo("Consulta_Prioridades");
+    }
+}
