@@ -99,11 +99,6 @@
             TextoBoton = "Eliminar";
             Titulo = "Eliminar Cliente";
         }
-        else
-        {
-            TextoBoton = "Crear Cliente";
-            Titulo = "Nuevo Cliente";
-        }
     }
 
     public void Nuevo()
@@ -113,8 +108,6 @@
 
     private async void OnValidSubmit()
     {
-
-
         if (Id != 0)
         {
             await clientesServices.Eliminar(clientes);

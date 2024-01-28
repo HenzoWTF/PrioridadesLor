@@ -67,15 +67,13 @@ namespace PrioridadesLor.BLL
                 .FirstOrDefaultAsync(s => s.SistemaId == sistemaID);
         }
 
-
-        public async Task<List<Sistema>> GetList(Expression<Func<Sistema, bool>> Criterio)
+        public async Task<List<Sistema>> Listar(Expression<Func<Sistema, bool>> criterio)
         {
             return await _contexto.sistema
                 .AsNoTracking()
-                .Where(Criterio)
+                .Where(criterio)
                 .ToListAsync();
         }
-
         public bool Validar()
         {
             return _contexto.sistema != null;

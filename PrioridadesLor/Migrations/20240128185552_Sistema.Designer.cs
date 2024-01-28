@@ -10,7 +10,7 @@ using PrioridadesLor.DAL;
 namespace PrioridadesLor.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240128160042_Sistema")]
+    [Migration("20240128185552_Sistema")]
     partial class Sistema
     {
         /// <inheritdoc />
@@ -71,6 +71,21 @@ namespace PrioridadesLor.Migrations
                     b.HasKey("IdPrioridad");
 
                     b.ToTable("prioridades");
+                });
+
+            modelBuilder.Entity("PrioridadesLor.Models.Sistema", b =>
+                {
+                    b.Property<int>("SistemaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SistemaNombre")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("SistemaId");
+
+                    b.ToTable("sistema");
                 });
 #pragma warning restore 612, 618
         }
