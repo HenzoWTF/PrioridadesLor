@@ -1,0 +1,97 @@
+﻿@page "/Sistema"
+@page "/Sistema/{Id:int}"
+
+
+@rendermode InteractiveServer
+
+@inject SistemaServices sistemaServices
+@inject NavigationManager navigationManager
+
+<PageTitle>Sistema</PageTitle>
+
+
+<EditForm Model="@sistema" OnValidSubmit="@OnValidSubmit">
+
+    <DataAnnotationsValidator />   <DataAnnotationsValidator />
+    <a href="" class="btn btn-outline-primary">Inicio</a>
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3> Registro de Sistema</h3>
+
+                <div class=card-body>
+
+                    @*Clientes ID*@
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <label>ID</label>
+                        <div class="input-group mb-3">
+                            <InputNumber @bind-Value="@sistema.SistemaId" class=" form-control" aria-describedby="BotonBuscar" />
+                            <ValidationMessage For="@(() => sistema.SistemaId)" />
+                        </div>
+                    </div>
+
+                    @*Nombre*@
+                    <label>Nombre</label>
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="@sistema.SistemaNombre" class=" form-control" />
+                        <ValidationMessage For="@(() => sistema.SistemaNombre)" />
+                    </div>
+
+
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <button class="btn btn-outline-success">@TextoBoton</button>
+                            <a href="Consulta_Sistema" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</EditForm>
+
+
+@code {
+    [Parameter] public int Id { get; set; }
+    public Sistema sistema { get; set; } = new Sistema();
+    string TextoBoton = string.Empty;
+    string Titulo = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != 0)
+        {
+            sistema = await sistemaServices.Buscar(Id);
+            TextoBoton = "Actualizar Cliente";
+            Titulo = "Editar Cliente";
+        }
+        else
+        {
+            TextoBoton = "Crear Cliente";
+            Titulo = "Nuevo Cliente";
+        }
+    }
+
+    public void Nuevo()
+    {
+        sistema = new Sistema();
+    }
+
+    private async void OnValidSubmit()
+    {
+
+        if (await sistemaServices.Guardar(sistema))
+        {
+            Nuevo();
+        }
+
+        navigationManager.NavigateTo("Consulta_Cliente");
+    }
+
+}
