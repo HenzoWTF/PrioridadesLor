@@ -14,6 +14,7 @@ builder.Services.AddDbContext<Contexto>(options => options.UseSqlite("Data Sourc
 builder.Services.AddScoped<PrioridadesServices>();
 builder.Services.AddScoped<ClientesServices>();
 builder.Services.AddScoped<SistemaServices>();
+builder.Services.AddScoped<TicketsServices>();
 
 var app = builder.Build();
 
