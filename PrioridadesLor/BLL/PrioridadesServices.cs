@@ -59,7 +59,12 @@ namespace PrioridadesLor.BLL
             
             return await _contexto.SaveChangesAsync() > 0;
         }
-
+        public async Task<Prioridades?> BuscarDescripcion(string description)
+        {
+            return await _contexto.prioridades
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.Descripcion.ToLower() == description.ToLower());
+        }
         public async Task<Prioridades?> Buscar(int IdPrioridad)
         {
             return await _contexto.prioridades
