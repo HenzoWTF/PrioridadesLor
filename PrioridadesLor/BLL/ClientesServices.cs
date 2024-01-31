@@ -49,6 +49,14 @@ namespace PrioridadesLor.BLL
             return cantidad > 0;
         }
 
+
+        public async Task<Cliente?> BuscarCliente(string nombre)
+        {
+            return await _contexto.clientes
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.NombreCliente.ToLower() == nombre.ToLower());
+        }
+
         public async Task<Cliente?> Buscar(int ClienteID)
         {
             return await _contexto.clientes

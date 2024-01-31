@@ -1,0 +1,90 @@
+﻿@page "/Consulta_Ticket"
+
+@rendermode InteractiveServer
+@inject TicketsServices ticketsServices
+@inject NavigationManager navigationManager
+
+<PageTitle>Consulta de Tickets</PageTitle>
+
+<h1>Consulta de Tickets</h1>
+
+
+<div>
+    <a href="/Ticket">Crear Ticket</a>
+</div>
+
+<table class="table">
+    @*Cabecera de la tabla cliente*@
+    <thead class="table-primary">
+        <tr bgcolor="skyblue">
+            <th> Id Ticket</th>
+            <th>Fecha</th>
+            <th>Solicitado por</th>
+            <th>Cliente Id</th>
+            <th>Sistema Id</th>
+            <th>Descripci&oacute;n</th>
+            <th>Prioridad Id</th>
+            <th>Asunto</th>
+            <th> </th>
+        </tr>
+    </thead>
+
+    <tbody class="table-sm">
+
+        @if (ticket.Count == 0)
+        {
+            @: No existe registros
+        }
+        else
+        {
+
+            @*Cuerpo de la tabla*@
+            @foreach (var Tickets in ticket)
+            {
+                <tr>
+                    <td>@Tickets.TicketdId</td>
+                    <td>@Tickets.Fecha</td>
+                    <td>@Tickets.SolicitadoPor</td>
+                    <td>@Tickets.ClienteId</td>
+                    <td>@Tickets.SistemaId</td>
+                    <td>@Tickets.Descripcion</td>
+                    <td>@Tickets.PrioridadId</td>
+                    <td>@Tickets.Asunto</td>
+                    <td>
+                        <a href="/Ticket/@Tickets.TicketdId"><i class="bi bi-pencil-square" /></a>
+                        <a href="/Eliminar_Ticket/@Tickets.TicketdId" class="link-danger"><i class="bi bi-trash" /></a>
+                    </td> 
+                </tr>
+
+            }
+        }
+    </tbody>
+</table>
+
+
+@code {
+    public List<Tickets> ticket { get; set; } = new List<Tickets>();
+    public Tickets TicketsT { get; set; } = new Tickets();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        ticket = await ticketsServices.Listar(c => true);
+    }
+
+    public async void Buscar()
+    {
+        var TicketEncontrado = await ticketsServices.Buscar(TicketsT.TicketdId);
+        if (TicketEncontrado != null)
+            TicketsT = TicketEncontrado;
+        else
+        {
+            Nuevo();
+        }
+    }
+
+    public void Nuevo()
+    {
+        TicketsT = new Tickets();
+    }
+}

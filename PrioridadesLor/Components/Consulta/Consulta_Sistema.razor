@@ -1,0 +1,77 @@
+﻿@page "/Consulta_Sistema"
+
+@rendermode InteractiveServer
+@inject SistemaServices sistemaServices
+@inject NavigationManager navigationManager
+
+<PageTitle>Consulta de sistema</PageTitle>
+
+<h1>Consulta de sistema</h1>
+
+
+<div>
+    <a href="/Sistema">Crear Cliente</a>
+</div>
+
+<table class="table">
+    @*Cabecera de la tabla cliente*@
+    <thead class="table-primary">
+        <tr bgcolor="skyblue">
+            <th> Id Sistema</th>
+            <th>Nombre</th>
+            <th> </th>
+        </tr>
+    </thead>
+
+    <tbody class="table-sm">
+
+        @if (sistema.Count == 0)
+        {
+            @: No existe registros
+        }
+        else
+        {
+
+            @*Cuerpo de la tabla*@
+            @foreach (var Sistema in sistema)
+            {
+                <tr>
+                    <td>@Sistema.SistemaId</td>
+                    <td>@Sistema.SistemaNombre</td>
+                    <td>
+                        <a href="/Sistema/@Sistema.SistemaId"><i class="bi bi-pencil-square" /></a>
+                        <a href="/Eliminar_Sistema/@Sistema.SistemaId" class="link-danger"><i class="bi bi-trash" /></a>
+                    </td>
+                </tr>
+
+            }
+        }
+    </tbody>
+</table>
+
+
+@code {
+    public List<Sistema> sistema { get; set; } = new List<Sistema>();
+    public Sistema SistemaS { get; set; } = new Sistema();
+
+    protected override async Task OnInitializedAsync()
+    {
+        sistema = await sistemaServices.Listar(c => true);
+    }
+
+    public async void Buscar()
+    {
+        var clienteEncontrado = await sistemaServices.Buscar(SistemaS.SistemaId);
+        if (clienteEncontrado != null)
+            SistemaS = clienteEncontrado;
+        else
+        {
+            Nuevo();
+        }
+    }
+
+    public void Nuevo()
+    {
+        SistemaS = new Sistema();
+    }
+}
