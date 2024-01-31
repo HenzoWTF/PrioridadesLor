@@ -68,14 +68,15 @@
 
     protected override async Task OnInitializedAsync()
     {
+
         ticket = await ticketsServices.Listar(c => true);
     }
 
     public async void Buscar()
     {
-        var clienteEncontrado = await ticketsServices.Buscar(TicketsT.TicketdId);
-        if (clienteEncontrado != null)
-            TicketsT = clienteEncontrado;
+        var TicketEncontrado = await ticketsServices.Buscar(TicketsT.TicketdId);
+        if (TicketEncontrado != null)
+            TicketsT = TicketEncontrado;
         else
         {
             Nuevo();
