@@ -11,7 +11,7 @@ namespace PrioridadesLor.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "TelefonoCliente",
+                name: "TelefonoClientes",
                 table: "clientes",
                 type: "TEXT",
                 nullable: false,
@@ -32,7 +32,7 @@ namespace PrioridadesLor.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "NombreCliente",
+                name: "NombresClientes",
                 table: "clientes",
                 type: "TEXT",
                 nullable: false,
@@ -42,7 +42,7 @@ namespace PrioridadesLor.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "EmailCliente",
+                name: "EmailClientes",
                 table: "clientes",
                 type: "TEXT",
                 nullable: false,
@@ -52,7 +52,7 @@ namespace PrioridadesLor.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "DireccionCliente",
+                name: "DireccionClientes",
                 table: "clientes",
                 type: "TEXT",
                 nullable: false,
@@ -62,7 +62,7 @@ namespace PrioridadesLor.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "CelularCliente",
+                name: "CelularClientes",
                 table: "clientes",
                 type: "TEXT",
                 nullable: false,
@@ -92,7 +92,7 @@ namespace PrioridadesLor.Migrations
                 name: "sistemas");
 
             migrationBuilder.AlterColumn<string>(
-                name: "TelefonoCliente",
+                name: "TelefonoClientes",
                 table: "clientes",
                 type: "TEXT",
                 nullable: true,
@@ -109,7 +109,7 @@ namespace PrioridadesLor.Migrations
                 oldMaxLength: 11);
 
             migrationBuilder.AlterColumn<string>(
-                name: "NombreCliente",
+                name: "NombresClientes",
                 table: "clientes",
                 type: "TEXT",
                 nullable: true,
@@ -117,7 +117,7 @@ namespace PrioridadesLor.Migrations
                 oldType: "TEXT");
 
             migrationBuilder.AlterColumn<string>(
-                name: "EmailCliente",
+                name: "EmailClientes",
                 table: "clientes",
                 type: "TEXT",
                 nullable: true,
@@ -125,7 +125,7 @@ namespace PrioridadesLor.Migrations
                 oldType: "TEXT");
 
             migrationBuilder.AlterColumn<string>(
-                name: "DireccionCliente",
+                name: "DireccionClientes",
                 table: "clientes",
                 type: "TEXT",
                 nullable: true,
@@ -133,7 +133,7 @@ namespace PrioridadesLor.Migrations
                 oldType: "TEXT");
 
             migrationBuilder.AlterColumn<string>(
-                name: "CelularCliente",
+                name: "CelularClientes",
                 table: "clientes",
                 type: "TEXT",
                 nullable: true,

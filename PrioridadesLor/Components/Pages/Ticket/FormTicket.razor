@@ -6,10 +6,10 @@
 @rendermode InteractiveServer
 
 @attribute [StreamRendering]
-@inject TicketsService TicketServices
-@inject PrioridadesService prioridadesServices
-@inject ClientesService clientesServices
-@inject SistemasService sistemaServices
+@inject TicketsService TicketsService
+@inject PrioridadesService prioridadesService
+@inject ClientesService clientesService
+@inject SistemasService sistemasService
 @inject NavigationManager navigationManager
 
 <PageTitle>Ticket</PageTitle>
@@ -30,8 +30,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
                         <label>ID</label>
                         <div class="input-group mb-3">
-                            <InputNumber @bind-Value="@ticket.TicketdId" class=" form-control" />
-                            <ValidationMessage For="@(() => ticket.TicketdId)" />
+                            <InputNumber @bind-Value="@ticket.TicketsId" class=" form-control" />
+                            <ValidationMessage For="@(() => ticket.TicketsId)" />
                         </div>
                     </div>
 
@@ -52,7 +52,7 @@
                                 <option>------------------</option>
                                 @foreach (var clientes in clientesList)
                                 {
-                                    <option value="@clientes.NombreCliente">@clientes.NombreCliente</option>
+                                    <option value="@clientes.NombresClientes">@clientes.NombresClientes</option>
                                 }
                             </InputSelect>
                             <ValidationMessage For="@(() => ticket.SolicitadoPor)"/>
@@ -63,8 +63,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
                         <label>Clientes Id</label>
                         <div class="input-group mb-3">
-                            <InputNumber id="clienteid" class="form-control" @bind-Value="ticket.ClienteId" readonly/>
-                            <ValidationMessage For="@(() => ticket.ClienteId)"/>
+                            <InputNumber id="clienteid" class="form-control" @bind-Value="ticket.ClientesId" readonly/>
+                            <ValidationMessage For="@(() => ticket.ClientesId)"/>
                         </div>
                     </div>
 
@@ -72,14 +72,14 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
                         <label>Sistema</label>
                         <div class="input-group mb-3">
-                            <InputSelect id="sistemaid" class="form-select" @bind-Value="ticket.SistemaId">
+                            <InputSelect id="sistemaid" class="form-select" @bind-Value="ticket.SistemasId">
                                 <option>------------------</option>
                                 @foreach (var sistemas in sistemasList)
                                 {
                                     <option value="@sistemas.SistemasId">@sistemas.SistemasNombres</option>
                                 }
                             </InputSelect>
-                            <ValidationMessage For="@(() => ticket.SistemaId)"></ValidationMessage>
+                            <ValidationMessage For="@(() => ticket.SistemasId)"></ValidationMessage>
                         </div>
                     </div>
 
@@ -100,8 +100,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
                         <label>Prioridad Id</label>
                         <div class="input-group mb-3">
-                            <InputNumber id="prioridadid" class="form-control" @bind-Value="ticket.PrioridadId" readonly></InputNumber>
-                            <ValidationMessage For="@(() => ticket.PrioridadId)"></ValidationMessage>
+                            <InputNumber id="prioridadid" class="form-control" @bind-Value="ticket.PrioridadesId" readonly></InputNumber>
+                            <ValidationMessage For="@(() => ticket.PrioridadesId)"></ValidationMessage>
                         </div>
                     </div>
 
@@ -137,24 +137,24 @@
     public Tickets ticket { get; set; } = new Tickets();
     string TextoBoton = string.Empty;
     string Titulo = string.Empty;
-    public List<Cliente> clientesList = new List<Cliente>();
+    public List<Clientes> clientesList = new List<Clientes>();
     public List<Sistemas> sistemasList = new List<Sistemas>();
     public List<Prioridades> prioridadesList = new List<Prioridades>();
 
     protected override async Task OnInitializedAsync()
     {
-        Expression<Func<Cliente, bool>> criterioCliente = cliente => cliente.ClientesID > 0;
-        clientesList = await clientesServices.Listar(criterioCliente);
+        Expression<Func<Clientes, bool>> criterioCliente = cliente => cliente.ClientesID > 0;
+        clientesList = await clientesService.Listar(criterioCliente);
 
         Expression<Func<Sistemas, bool>> criterioSistema = sistema => sistema.SistemasId > 0;
-        sistemasList = await sistemaServices.Listar(criterioSistema);
+        sistemasList = await sistemasService.Listar(criterioSistema);
 
-        Expression<Func<Prioridades, bool>> criterioPrioridad = prioridad => prioridad.IdPrioridad > 0;
-        prioridadesList = await prioridadesServices.GetList(criterioPrioridad);
+        Expression<Func<Prioridades, bool>> criterioPrioridad = prioridad => prioridad.IdPrioridades > 0;
+        prioridadesList = await prioridadesService.GetList(criterioPrioridad);
 
         if (Id != 0)
         {
-            ticket = await TicketServices.Buscar(Id);
+            ticket = await TicketsService.Buscar(Id);
             TextoBoton = "Actualizar Ticket";
             Titulo = "Editar Ticket";
         }
@@ -173,7 +173,7 @@
     private async void OnValidSubmit()
     {
 
-        if (await TicketServices.Guardar(ticket))
+        if (await TicketsService.Guardar(ticket))
         {
             Nuevo();
         }
@@ -185,12 +185,12 @@
     {
         if (valor != null)
         {
-            var buscar = await clientesServices.BuscarCliente(valor);
+            var buscar = await clientesService.BuscarClientes(valor);
             if (buscar != null)
             {
-                var id = await clientesServices.Buscar(buscar.ClientesID);
+                var id = await clientesService.Buscar(buscar.ClientesID);
                 if (id != null)
-                    ticket.ClienteId = id.ClientesID;
+                    ticket.ClientesId = id.ClientesID;
             }
         }
     }
@@ -199,12 +199,12 @@
     {
         if (valor != null)
         {
-            var buscar = await prioridadesServices.BuscarDescripcion(valor);
+            var buscar = await prioridadesService.BuscarDescripcion(valor);
             if (buscar != null)
             {
-                var id = await prioridadesServices.Buscar(buscar.IdPrioridad);
+                var id = await prioridadesService.Buscar(buscar.IdPrioridades);
                 if (id != null)
-                    ticket.PrioridadId = id.IdPrioridad;
+                    ticket.PrioridadesId = id.IdPrioridades;
             }
         }
     }

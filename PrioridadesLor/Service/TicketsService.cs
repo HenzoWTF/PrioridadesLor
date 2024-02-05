@@ -17,7 +17,7 @@ namespace PrioridadesLor.BLL
 
         public async Task<bool> Guardar(Tickets tickets)
         {
-            if (!await Existe(tickets.TicketdId))
+            if (!await Existe(tickets.TicketsId))
                 return await Insertar(tickets);
             else
                 return await Modificar(tickets);
@@ -39,13 +39,13 @@ namespace PrioridadesLor.BLL
 
         public async Task<bool> Existe(int id)
         {
-            return await _context.tickets.AnyAsync(t => t.TicketdId == id);
+            return await _context.tickets.AnyAsync(t => t.TicketsId == id);
         }
 
         public async Task<bool> Eliminar(Tickets tickets)
         {
             var cantidad = await _context.tickets
-                .Where(t => t.TicketdId == tickets.TicketdId)
+                .Where(t => t.TicketsId == tickets.TicketsId)
                 .ExecuteDeleteAsync();
             return cantidad > 0;
         }
@@ -54,7 +54,7 @@ namespace PrioridadesLor.BLL
         {
             return await _context.tickets
                 .AsNoTracking()
-                .FirstOrDefaultAsync(t => t.TicketdId == Id);
+                .FirstOrDefaultAsync(t => t.TicketsId == Id);
         }
 
         public async Task<List<Tickets>> Listar(Expression<Func<Tickets, bool>> criterio)

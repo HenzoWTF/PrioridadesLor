@@ -17,7 +17,7 @@ namespace PrioridadesLor.BLL
 
         public async Task<bool> Existe(int IdPrioridades)
         {
-            return await _contexto.prioridades.AnyAsync(p => p.IdPrioridad == IdPrioridades);
+            return await _contexto.prioridades.AnyAsync(p => p.IdPrioridades == IdPrioridades);
             
         }
 
@@ -41,7 +41,7 @@ namespace PrioridadesLor.BLL
 
         public async Task<bool> Guardar(Prioridades prioridades)
         {
-            if (! await Existe(prioridades.IdPrioridad) && ! await DescripcionRepetida(prioridades.Descripcion))
+            if (! await Existe(prioridades.IdPrioridades) && ! await DescripcionRepetida(prioridades.Descripcion))
             {
                 return await Insertar(prioridades);
             }
@@ -54,7 +54,7 @@ namespace PrioridadesLor.BLL
         public async Task<bool> Eliminar(Prioridades prioridades)
         {
             var entidad = await _contexto.prioridades
-                .Where(p => p.IdPrioridad == prioridades.IdPrioridad)
+                .Where(p => p.IdPrioridades == prioridades.IdPrioridades)
                 .ExecuteDeleteAsync();
             
             return await _contexto.SaveChangesAsync() > 0;
@@ -69,7 +69,7 @@ namespace PrioridadesLor.BLL
         {
             return await _contexto.prioridades
                 .AsNoTracking()
-                .FirstOrDefaultAsync(p => p.IdPrioridad ==IdPrioridades);
+                .FirstOrDefaultAsync(p => p.IdPrioridades ==IdPrioridades);
         }
 
         

@@ -6,19 +6,19 @@ namespace PrioridadesLor.Models
     public class Tickets
     {
         [Key]
-        public int TicketdId { get; set; }
+        public int TicketsId { get; set; }
 
         [Required(ErrorMessage = "El campo Fecha es obligatorio")]
         public DateTime Fecha { get; set; } = DateTime.Now;
 
-        [ForeignKey("ClienteId)")]
-        public int ClienteId {  get; set; }
+        [ForeignKey("ClientesId)")]
+        public int ClientesId {  get; set; }
 
         [ForeignKey("SistemasId")]
-        public int SistemaId { get; set;}
+        public int SistemasId { get; set;}
 
-        [ForeignKey("PrioridadId")]
-        public int PrioridadId { get; set; }
+        [ForeignKey("PrioridadesId")]
+        public int PrioridadesId { get; set; }
 
         [Required(ErrorMessage = "El campo Solicitado Por se encuentra vacio")]
         public string? SolicitadoPor { get; set; }

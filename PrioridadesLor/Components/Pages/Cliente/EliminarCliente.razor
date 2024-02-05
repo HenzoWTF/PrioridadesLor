@@ -34,20 +34,20 @@
                     @*Nombre*@
                     <h4>
                         <strong>Nombre: </strong>
-                        @clientes.NombreCliente
+                        @clientes.NombresClientes
                     </h4>
 
                     @*Telefono*@
                     <h4>
                         <strong>Telefono: </strong>
-                        @clientes.TelefonoCliente
+                        @clientes.TelefonoClientes
 
                     </h4>
 
                     @*Celular*@
                     <h4>
                         <strong>Celular: </strong>
-                        @clientes.CelularCliente
+                        @clientes.CelularClientes
                     </h4>
 
                     @*RNC*@
@@ -59,13 +59,13 @@
                     @*Email*@
                     <h4>
                         <strong>Email: </strong>
-                        @clientes.EmailCliente
+                        @clientes.EmailClientes
                     </h4>
 
                     @*Direccion*@
                     <h4>
                         <strong>Direcci&oacuten: </strong>
-                        @clientes.DireccionCliente
+                        @clientes.DireccionClientes
                     </h4>
 
                     <div class="card-footer d-flex justify-content-center">
@@ -87,7 +87,7 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    public Cliente clientes { get; set; } = new Cliente();
+    public Clientes clientes { get; set; } = new Clientes();
     string TextoBoton = string.Empty;
     string Titulo = string.Empty;
 
@@ -99,13 +99,13 @@
         {
             clientes = await clientesServices.Buscar(Id);
             TextoBoton = "Eliminar";
-            Titulo = "Eliminar Cliente";
+            Titulo = "Eliminar Clientes";
         }
     }
 
     public void Nuevo()
     {
-        clientes = new Cliente();
+        clientes = new Clientes();
     }
 
     private async void OnValidSubmit()

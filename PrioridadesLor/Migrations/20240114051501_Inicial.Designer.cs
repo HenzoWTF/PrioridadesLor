@@ -21,7 +21,7 @@ namespace PrioridadesLor.Migrations
 
             modelBuilder.Entity("PrioridadesLor.Models.Prioridades", b =>
                 {
-                    b.Property<int>("IdPrioridad")
+                    b.Property<int>("IdPrioridades")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -32,7 +32,7 @@ namespace PrioridadesLor.Migrations
                     b.Property<int>("DiasCompromiso")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdPrioridad");
+                    b.HasKey("IdPrioridades");
 
                     b.ToTable("Prioridades");
                 });

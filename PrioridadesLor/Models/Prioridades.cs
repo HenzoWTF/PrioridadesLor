@@ -8,7 +8,7 @@ namespace PrioridadesLor.Models
 
         [Range(1, int.MaxValue, ErrorMessage = "Debe ser mayor que 0")]
         [Key]
-        public int IdPrioridad { get; set; }
+        public int IdPrioridades { get; set; }
 
         [Required(ErrorMessage = "El campo Descripcion es obligatorio")]
         public string? Descripcion { get; set; }

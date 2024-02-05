@@ -2,7 +2,7 @@
 
 namespace PrioridadesLor.Models
 {
-    public class Cliente
+    public class Clientes
     {
         [Range(1, int.MaxValue, ErrorMessage = "Debe ser mayor que 0")]
         [Key]
@@ -11,20 +11,20 @@ namespace PrioridadesLor.Models
         [Required(ErrorMessage = "Debe de insertar un nombre")]
         [RegularExpression(@"^[a-zA-Z\s]+$",
         ErrorMessage = "Debe de insertar un nombre valido")]
-        public string? NombreCliente { get; set; }
+        public string? NombresClientes { get; set; }
 
 
         [Required(ErrorMessage = "Debe de insertar un numero telefonico")]
         [RegularExpression(@"^[0-9- \s]{10,12}$",
         ErrorMessage = "Debe de insertar un numero telefonico con el formato correcto")]
         [Phone]
-        public string? CelularCliente { get; set; }
+        public string? CelularClientes { get; set; }
 
         [Required(ErrorMessage = "Debe de insertar un numero de celular")]
         [RegularExpression(@"^[0-9- \s]{10,12}$",
         ErrorMessage = "Debe de insertar un numero celular con el formato correcto")]
         [Phone]
-        public string? TelefonoCliente { get; set; }
+        public string? TelefonoClientes { get; set; }
 
         [Required(ErrorMessage = "Debe de insertar un RNC")]
         [StringLength(11, ErrorMessage = "El RNC debe de tener 11 caracteres")]
@@ -32,10 +32,10 @@ namespace PrioridadesLor.Models
 
         [Required(ErrorMessage = "El campo Correo Electronico es obligatorio")]
         [EmailAddress]
-        public string? EmailCliente { get; set; }
+        public string? EmailClientes { get; set; }
 
         [Required(ErrorMessage = "Debe de insertar una direccion")]
-        public string? DireccionCliente { get; set;}
+        public string? DireccionClientes { get; set;}
 
 
     }

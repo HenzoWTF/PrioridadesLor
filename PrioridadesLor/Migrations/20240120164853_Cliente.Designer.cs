@@ -19,28 +19,28 @@ namespace PrioridadesLor.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
 
-            modelBuilder.Entity("PrioridadesLor.Models.Cliente", b =>
+            modelBuilder.Entity("PrioridadesLor.Models.Clientes", b =>
                 {
                     b.Property<int>("ClientesID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CelularCliente")
+                    b.Property<string>("CelularClientes")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DireccionCliente")
+                    b.Property<string>("DireccionClientes")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("EmailCliente")
+                    b.Property<string>("EmailClientes")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NombreCliente")
+                    b.Property<string>("NombresClientes")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RNC")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TelefonoCliente")
+                    b.Property<string>("TelefonoClientes")
                         .HasColumnType("TEXT");
 
                     b.HasKey("ClientesID");
@@ -50,7 +50,7 @@ namespace PrioridadesLor.Migrations
 
             modelBuilder.Entity("PrioridadesLor.Models.Prioridades", b =>
                 {
-                    b.Property<int>("IdPrioridad")
+                    b.Property<int>("IdPrioridades")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -61,7 +61,7 @@ namespace PrioridadesLor.Migrations
                     b.Property<int>("DiasCompromiso")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdPrioridad");
+                    b.HasKey("IdPrioridades");
 
                     b.ToTable("prioridades");
                 });

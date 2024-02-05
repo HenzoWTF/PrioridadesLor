@@ -15,64 +15,64 @@ namespace PrioridadesLor.BLL
         }
 
 
-        public async Task<bool> Existe(int ClienteID)
+        public async Task<bool> Existe(int ClientesID)
         {
             return await _contexto.clientes
-                .AnyAsync(c => c.ClientesID == ClienteID);
+                .AnyAsync(c => c.ClientesID == ClientesID);
         }
 
-        public async Task<bool> Modificar(Cliente cliente)
+        public async Task<bool> Modificar(Clientes clientes)
         {
-            _contexto.Update(cliente);
+            _contexto.Update(clientes);
             return await _contexto.SaveChangesAsync() > 0;
         }
 
-        private async Task<bool> Insertar(Cliente cliente)
+        private async Task<bool> Insertar(Clientes clientes)
         {
-            _contexto.clientes.Add(cliente);
+            _contexto.clientes.Add(clientes);
             return await _contexto.SaveChangesAsync() > 0;
         }
-        public async Task<bool> Guardar(Cliente cliente)
+        public async Task<bool> Guardar(Clientes clientes)
         {
-            if (!await Existe(cliente.ClientesID))
-                return await Insertar(cliente);
+            if (!await Existe(clientes.ClientesID))
+                return await Insertar(clientes);
             else
-                return await Modificar(cliente);
+                return await Modificar(clientes);
         }
 
-        public async Task<bool> Eliminar(Cliente cliente)
+        public async Task<bool> Eliminar(Clientes clientes)
         {
             var cantidad = await _contexto.clientes
-                .Where(c => c.ClientesID == cliente.ClientesID)
+                .Where(c => c.ClientesID == clientes.ClientesID)
                 .ExecuteDeleteAsync();
 
             return cantidad > 0;
         }
 
 
-        public async Task<Cliente?> BuscarCliente(string nombre)
+        public async Task<Clientes?> BuscarClientes(string nombres)
         {
             return await _contexto.clientes
                 .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.NombreCliente.ToLower() == nombre.ToLower());
+                .FirstOrDefaultAsync(c => c.NombresClientes.ToLower() == nombres.ToLower());
         }
 
-        public async Task<Cliente?> Buscar(int ClienteID)
+        public async Task<Clientes?> Buscar(int ClientesID)
         {
             return await _contexto.clientes
                 .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.ClientesID == ClienteID);
+                .FirstOrDefaultAsync(c => c.ClientesID == ClientesID);
         }
 
-        public async Task <List<Cliente>> Listar (Expression<Func<Cliente, bool>> criterio)
+        public async Task <List<Clientes>> Listar (Expression<Func<Clientes, bool>> criterio)
         {
             return await _contexto.clientes.AsNoTracking().Where(criterio).ToListAsync();
         }
 
 
-        public bool ExisteD(Cliente cliente)
+        public bool ExisteD(Clientes clientes)
         {
-            var mismosDatos = _contexto.clientes.Any(c => c.NombreCliente == cliente.NombreCliente || c.RNC == cliente.RNC);
+            var mismosDatos = _contexto.clientes.Any(c => c.NombresClientes == clientes.NombresClientes || c.RNC == clientes.RNC);
             if (mismosDatos)
             {
                 return false;
