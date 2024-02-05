@@ -15,7 +15,8 @@ namespace PrioridadesLor.Models
         public int ClientesId {  get; set; }
 
         [ForeignKey("SistemasId")]
-        public int SistemasId { get; set;}
+        [Required(ErrorMessage = "El campo Sistema es obligatorio.")]
+        public int? SistemasId { get; set;}
 
         [ForeignKey("PrioridadesId")]
         public int PrioridadesId { get; set; }
