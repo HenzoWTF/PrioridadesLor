@@ -1,9 +1,9 @@
 ﻿@page "/Eliminar_CLiente"
-@page "/Eliminar_CLiente/{Id:int}"
+@page "/Eliminar_CLiente/{CliestesId:int}"
 
 @rendermode InteractiveServer
 
-@inject ClientesService clientesServices
+@inject ClientesService clientesService
 @inject NavigationManager navigationManager
 
 
@@ -86,7 +86,7 @@
 
 
 @code {
-    [Parameter] public int Id { get; set; }
+    [Parameter] public int CliestesId { get; set; }
     public Clientes clientes { get; set; } = new Clientes();
     string TextoBoton = string.Empty;
     string Titulo = string.Empty;
@@ -95,9 +95,9 @@
     {
 
 
-        if (Id != 0)
+        if (CliestesId != 0)
         {
-            clientes = await clientesServices.Buscar(Id);
+            clientes = await clientesService.Buscar(CliestesId);
             TextoBoton = "Eliminar";
             Titulo = "Eliminar Clientes";
         }
@@ -110,9 +110,9 @@
 
     private async void OnValidSubmit()
     {
-        if (Id != 0)
+        if (CliestesId != 0)
         {
-            await clientesServices.Eliminar(clientes);
+            await clientesService.Eliminar(clientes);
             Nuevo();
         }
 

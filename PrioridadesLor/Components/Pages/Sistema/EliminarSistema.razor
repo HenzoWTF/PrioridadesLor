@@ -1,5 +1,5 @@
 ﻿@page "/Eliminar_Sistema"
-@page "/Eliminar_Sistema/{Id:int}"
+@page "/Eliminar_Sistema/{SistemasId:int}"
 
 @rendermode InteractiveServer
 
@@ -56,7 +56,7 @@
 
 
 @code {
-    [Parameter] public int Id { get; set; }
+    [Parameter] public int SistemasId { get; set; }
     public Sistemas sistema { get; set; } = new Sistemas();
     string TextoBoton = string.Empty;
     string Titulo = string.Empty;
@@ -65,9 +65,9 @@
     {
 
 
-        if (Id != 0)
+        if (SistemasId != 0)
         {
-            sistema = await sistemaServices.Buscar(Id);
+            sistema = await sistemaServices.Buscar(SistemasId);
             TextoBoton = "Eliminar";
             Titulo = "Eliminar Clientes";
         }
@@ -87,7 +87,7 @@
     {
 
 
-        if (Id != 0)
+        if (SistemasId != 0)
         {
             await sistemaServices.Eliminar(sistema);
             Nuevo();

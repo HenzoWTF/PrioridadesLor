@@ -1,8 +1,8 @@
 ﻿@page "/Eliminar_Prioridad"
-@page "/Eliminar_Prioridad/{id:int}"
+@page "/Eliminar_Prioridad/{prioridadesId:int}"
 
 @rendermode InteractiveServer
-@inject PrioridadesService prioridadesServices
+@inject PrioridadesService prioridadesService
 @inject NavigationManager navigationManager
 
 
@@ -65,16 +65,16 @@
 
 
 @code {
-    [Parameter] public int id { get; set; }
+    [Parameter] public int prioridadesId { get; set; }
     public Prioridades prioridades = new Prioridades();
     string TextoBoton = string.Empty;
     string titulo = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        if (id != 0)
+        if (prioridadesId != 0)
         {
-            prioridades = await prioridadesServices.Buscar(id);
+            prioridades = await prioridadesService.Buscar(prioridadesId);
             TextoBoton = "Eliminar";
             titulo = "Eliminar Clientes";
         }
@@ -92,9 +92,9 @@
 
     private async void OnValidSubmit()
     {
-        if (id != 0)
+        if (prioridadesId != 0)
         {
-            await prioridadesServices.Eliminar(prioridades);
+            await prioridadesService.Eliminar(prioridades);
             Nuevo();
         }
         navigationManager.NavigateTo("Consulta_Prioridades");
