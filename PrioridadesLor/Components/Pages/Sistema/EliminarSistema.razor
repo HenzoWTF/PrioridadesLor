@@ -3,7 +3,7 @@
 
 @rendermode InteractiveServer
 
-@inject SistemaServices sistemaServices
+@inject SistemasService sistemaServices
 @inject NavigationManager navigationManager
 
 
@@ -27,14 +27,14 @@
 
                         <h4>
                             <strong>ID:</strong>
-                            @sistema.SistemaId
+                            @sistema.SistemasId
                         </h4>
                     </div>
 
                     @*Nombre*@
                     <h4>
                         <strong>Nombre: </strong>
-                        @sistema.SistemaNombre
+                        @sistema.SistemasNombres
                     </h4>
 
 
@@ -57,7 +57,7 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    public Sistema sistema { get; set; } = new Sistema();
+    public Sistemas sistema { get; set; } = new Sistemas();
     string TextoBoton = string.Empty;
     string Titulo = string.Empty;
 
@@ -80,7 +80,7 @@
 
     public void Nuevo()
     {
-        sistema = new Sistema();
+        sistema = new Sistemas();
     }
 
     private async void OnValidSubmit()

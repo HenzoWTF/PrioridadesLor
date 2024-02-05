@@ -72,7 +72,7 @@ namespace PrioridadesLor.Migrations
                 oldNullable: true);
 
             migrationBuilder.CreateTable(
-                name: "sistema",
+                name: "sistemas",
                 columns: table => new
                 {
                     SistemaId = table.Column<int>(type: "INTEGER", nullable: false)
@@ -89,7 +89,7 @@ namespace PrioridadesLor.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "sistema");
+                name: "sistemas");
 
             migrationBuilder.AlterColumn<string>(
                 name: "TelefonoCliente",

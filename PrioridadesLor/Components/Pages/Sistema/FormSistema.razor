@@ -1,10 +1,10 @@
-﻿@page "/Sistema"
-@page "/Sistema/{Id:int}"
+﻿@page "/Sistemas"
+@page "/Sistemas/{Id:int}"
 
 
 @rendermode InteractiveServer
 
-@inject SistemaServices sistemaServices
+@inject SistemasService sistemaServices
 @inject NavigationManager navigationManager
 
 <PageTitle>Sistema</PageTitle>
@@ -25,16 +25,16 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
                         <label>ID</label>
                         <div class="input-group mb-3">
-                            <InputNumber @bind-Value="@sistema.SistemaId" class=" form-control" aria-describedby="BotonBuscar" />
-                            <ValidationMessage For="@(() => sistema.SistemaId)" />
+                            <InputNumber @bind-Value="@sistema.SistemasId" class=" form-control" aria-describedby="BotonBuscar" />
+                            <ValidationMessage For="@(() => sistema.SistemasId)" />
                         </div>
                     </div>
 
                     @*Nombre*@
                     <label>Nombre</label>
                     <div class="input-group mb-3">
-                        <InputText @bind-Value="@sistema.SistemaNombre" class=" form-control" />
-                        <ValidationMessage For="@(() => sistema.SistemaNombre)" />
+                        <InputText @bind-Value="@sistema.SistemasNombres" class=" form-control" />
+                        <ValidationMessage For="@(() => sistema.SistemasNombres)" />
                     </div>
 
 
@@ -58,7 +58,7 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    public Sistema sistema { get; set; } = new Sistema();
+    public Sistemas sistema { get; set; } = new Sistemas();
     string TextoBoton = string.Empty;
     string Titulo = string.Empty;
 
@@ -79,7 +79,7 @@
 
     public void Nuevo()
     {
-        sistema = new Sistema();
+        sistema = new Sistemas();
     }
 
     private async void OnValidSubmit()

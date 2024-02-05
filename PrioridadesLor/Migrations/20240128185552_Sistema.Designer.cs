@@ -73,19 +73,19 @@ namespace PrioridadesLor.Migrations
                     b.ToTable("prioridades");
                 });
 
-            modelBuilder.Entity("PrioridadesLor.Models.Sistema", b =>
+            modelBuilder.Entity("PrioridadesLor.Models.Sistemas", b =>
                 {
-                    b.Property<int>("SistemaId")
+                    b.Property<int>("SistemasId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("SistemaNombre")
+                    b.Property<string>("SistemasNombres")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("SistemaId");
+                    b.HasKey("SistemasId");
 
-                    b.ToTable("sistema");
+                    b.ToTable("sistemas");
                 });
 #pragma warning restore 612, 618
         }

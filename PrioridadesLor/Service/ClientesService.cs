@@ -5,11 +5,11 @@ using PrioridadesLor.Models;
 
 namespace PrioridadesLor.BLL
 {
-    public class ClientesServices
+    public class ClientesService
     {
         private readonly Contexto _contexto;
 
-        public ClientesServices(Contexto contexto)
+        public ClientesService(Contexto contexto)
         {
             _contexto = contexto;
         }

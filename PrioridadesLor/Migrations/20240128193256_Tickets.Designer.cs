@@ -74,19 +74,19 @@ namespace PrioridadesLor.Migrations
                     b.ToTable("prioridades");
                 });
 
-            modelBuilder.Entity("PrioridadesLor.Models.Sistema", b =>
+            modelBuilder.Entity("PrioridadesLor.Models.Sistemas", b =>
                 {
-                    b.Property<int>("SistemaId")
+                    b.Property<int>("SistemasId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("SistemaNombre")
+                    b.Property<string>("SistemasNombres")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("SistemaId");
+                    b.HasKey("SistemasId");
 
-                    b.ToTable("sistema");
+                    b.ToTable("sistemas");
                 });
 
             modelBuilder.Entity("PrioridadesLor.Models.Tickets", b =>
@@ -112,7 +112,7 @@ namespace PrioridadesLor.Migrations
                     b.Property<int>("PrioridadId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("SistemaId")
+                    b.Property<int>("SistemasId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SolicitadoPor")

@@ -6,11 +6,11 @@ using System;
 
 namespace PrioridadesLor.BLL
 {
-    public class PrioridadesServices
+    public class PrioridadesService
     {
         private readonly Contexto _contexto;
 
-        public PrioridadesServices(Contexto contexto)
+        public PrioridadesService(Contexto contexto)
         {
             _contexto = contexto;
         }

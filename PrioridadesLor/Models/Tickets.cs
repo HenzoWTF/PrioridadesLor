@@ -14,7 +14,7 @@ namespace PrioridadesLor.Models
         [ForeignKey("ClienteId)")]
         public int ClienteId {  get; set; }
 
-        [ForeignKey("SistemaId")]
+        [ForeignKey("SistemasId")]
         public int SistemaId { get; set;}
 
         [ForeignKey("PrioridadId")]
