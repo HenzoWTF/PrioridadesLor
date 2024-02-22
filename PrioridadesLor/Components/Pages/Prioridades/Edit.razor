@@ -1,5 +1,4 @@
-﻿@page "/Prioridad"
-@page "/Prioridad/{id:int}"
+﻿@page "/EditPrioridad/{id:int}"
 
 @rendermode InteractiveServer
 
@@ -16,7 +15,7 @@
     <div class="container">
         <div class="card shadow-lg">
             <div class="card-header">
-                <h3>Registro de Prioriodad</h3>
+                <h3>Editar Prioriodad</h3>
 
                 <div class="card-body">
 
@@ -47,8 +46,8 @@
 
                     <div class="card-footer d-flex justify-content-center">
                         <div class="btn-group">
-                            <button class="btnn btn-outline-success">@TextoBoton</button>
-                            <a href="Consulta_Prioridades" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /></a>
+                            <button class="btnn btn-outline-success"><i class="bi bi-floppy-fill "/> @TextoBoton</button>
+                            <a href="Consulta_Prioridades" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
                         </div>
                     </div>
 
@@ -65,7 +64,6 @@
     [Parameter]public int id { get; set; }
     public Prioridades prioridades = new Prioridades();
     string TextoBoton = string.Empty;
-    string titulo = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,12 +71,6 @@
         {
             prioridades = await prioridadesService.Buscar(id);
             TextoBoton = "Actualizar Prioridad";
-            titulo = "Editar Prioridad";
-        }
-        else
-        {
-            TextoBoton = "Crear prioridad";
-            titulo = "Nueva prioridad";
         }
     }
 
