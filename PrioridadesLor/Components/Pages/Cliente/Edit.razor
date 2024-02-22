@@ -1,5 +1,5 @@
-﻿@page "/Clientes"
-@page "/Clientes/{Id:int}"
+﻿@page "/EditClientes"
+@page "/EditClientes/{Id:int}"
 
 
 @rendermode InteractiveServer
@@ -7,7 +7,7 @@
 @inject ClientesService clientesService
 @inject NavigationManager navigationManager
 
-<PageTitle>Clientes</PageTitle>
+<PageTitle>Editar Clientes</PageTitle>
 
 
 <EditForm Model="@clientes" OnValidSubmit="@OnValidSubmit">
@@ -102,11 +102,6 @@
             clientes = await clientesService.Buscar(Id);
             TextoBoton = "Actualizar Clientes";
             Titulo = "Editar Clientes";
-        }
-        else
-        {
-            TextoBoton = "Crear Clientes";
-            Titulo = "Nuevo Clientes";
         }
     }
 

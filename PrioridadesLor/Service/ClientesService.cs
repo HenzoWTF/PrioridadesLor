@@ -21,12 +21,13 @@ namespace PrioridadesLor.BLL
                 .AnyAsync(c => c.ClientesID == ClientesID);
         }
 
-        public async Task<bool> Modificar(Clientes clientes)
+        public async Task<bool> Modificar(Clientes cliente)
         {
-            _contexto.Update(clientes);
-            return await _contexto.SaveChangesAsync() > 0;
+            _contexto.Update(cliente);
+            var modificar = await _contexto.SaveChangesAsync() > 0;
+            _contexto.Entry(cliente).State = EntityState.Detached;
+            return modificar;
         }
-
         private async Task<bool> Insertar(Clientes clientes)
         {
             _contexto.clientes.Add(clientes);

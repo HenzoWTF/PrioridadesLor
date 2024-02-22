@@ -1,0 +1,101 @@
+﻿@page "/Detalles_CLiente"
+@page "/Detalle_CLiente/{CliestesId:int}"
+
+@rendermode InteractiveServer
+
+@inject ClientesService clientesService
+@inject NavigationManager navigationManager
+
+
+<PageTitle>Detalles del Clientes</PageTitle>
+
+<EditForm Model="@clientes" OnValidSubmit="@OnInitializedAsync">
+
+    <DataAnnotationsValidator />   <DataAnnotationsValidator />
+    <a href="" class="btn btn-outline-primary">Inicio</a>
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3> Detalles del Cliente</h3>
+
+                <div class=card-body>
+
+                    @*Clientes ID*@
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <h4>
+                            <strong>ID:</strong>
+                            @clientes.ClientesID
+                        </h4>
+                    </div>
+
+                    @*Nombre*@
+                    <h4>
+                        <strong>Nombre: </strong>
+                        @clientes.NombresClientes
+                    </h4>
+
+                    @*Telefono*@
+                    <h4>
+                        <strong>Tel&eacute;fono: </strong>
+                        @clientes.TelefonoClientes
+
+                    </h4>
+
+                    @*Celular*@
+                    <h4>
+                        <strong>Celular: </strong>
+                        @clientes.CelularClientes
+                    </h4>
+
+                    @*RNC*@
+                    <h4>
+                        <strong>RNC: </strong>
+                        @clientes.RNC
+                    </h4>
+
+                    @*Email*@
+                    <h4>
+                        <strong>Email: </strong>
+                        @clientes.EmailClientes
+                    </h4>
+
+                    @*Direccion*@
+                    <h4>
+                        <strong>Direcci&oacuten: </strong>
+                        @clientes.DireccionClientes
+                    </h4>
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <a href="Consulta_Cliente" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</EditForm>
+
+
+@code {
+    [Parameter] public int CliestesId { get; set; }
+    public Clientes clientes { get; set; } = new Clientes();
+    string TextoBoton = string.Empty;
+    string Titulo = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+
+        if (CliestesId != 0)
+        {
+            clientes = await clientesService.Buscar(CliestesId);
+        }
+    }
+
+}
