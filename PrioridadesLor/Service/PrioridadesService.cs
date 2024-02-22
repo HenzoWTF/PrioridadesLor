@@ -32,11 +32,13 @@ namespace PrioridadesLor.BLL
             return await _contexto.SaveChangesAsync() > 0;
         }
 
+
         public async Task<bool> Modificar(Prioridades prioridades)
         {
-           _contexto.Update(prioridades);
-            return await _contexto.SaveChangesAsync() > 0;
-
+            _contexto.Update(prioridades);
+            var modificar = await _contexto.SaveChangesAsync() > 0;
+            _contexto.Entry(prioridades).State = EntityState.Detached;
+            return modificar;
         }
 
         public async Task<bool> Guardar(Prioridades prioridades)

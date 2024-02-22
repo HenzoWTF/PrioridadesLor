@@ -35,8 +35,9 @@ namespace PrioridadesLor.BLL
         public async Task<bool> Modificar(Sistemas sistemas)
         {
             _contexto.Update(sistemas);
-            return await _contexto.SaveChangesAsync() > 0;
-
+            var modificar = await _contexto.SaveChangesAsync() > 0;
+            _contexto.Entry(sistemas).State = EntityState.Detached;
+            return modificar;
         }
 
         public async Task<bool> Guardar(Sistemas sistemas)
