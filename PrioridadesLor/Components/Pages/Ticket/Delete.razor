@@ -1,5 +1,4 @@
-﻿@page "/Eliminar_Ticket"
-@page "/Eliminar_Ticket/{TicketsId:int}"
+﻿@page "/Eliminar_Ticket/{TicketsId:int}"
 
 @rendermode InteractiveServer
 
@@ -17,7 +16,7 @@
     <div class="container">
         <div class="card shadow-lg">
             <div class="card-header">
-                <h3> Eliminar Cliente</h3>
+                <h3> Eliminar Ticket</h3>
 
                 <div class=card-body>
                     <h3><strong>¿Est&aacute;s seguro de que quieres eliminar este ticket?</strong></h3>
@@ -54,7 +53,7 @@
 
                     <div class="card-footer d-flex justify-content-center">
                         <div class="btn-group">
-                            <button class="btn btn-outline-danger">@TextoBoton</button>
+                            <button class="btn btn-outline-danger"><i class="bi bi-trash"/> Eliminar</button>
                             <a href="Consulta_Ticket" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
                         </div>
                     </div>
@@ -72,8 +71,6 @@
 @code {
     [Parameter] public int TicketsId { get; set; }
     public Tickets tickets { get; set; } = new Tickets();
-    string TextoBoton = string.Empty;
-    string Titulo = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -82,8 +79,6 @@
         if (TicketsId != 0)
         {
             tickets = await ticketsService.Buscar(TicketsId);
-            TextoBoton = "Eliminar";
-            Titulo = "Eliminar Clientes";
         }
     }
 
