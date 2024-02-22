@@ -17,25 +17,25 @@ namespace PrioridadesLor.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
 
-            modelBuilder.Entity("PrioridadesLor.Models.Cliente", b =>
+            modelBuilder.Entity("PrioridadesLor.Models.Clientes", b =>
                 {
                     b.Property<int>("ClientesID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CelularCliente")
+                    b.Property<string>("CelularClientes")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DireccionCliente")
+                    b.Property<string>("DireccionClientes")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("EmailCliente")
+                    b.Property<string>("EmailClientes")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("NombreCliente")
+                    b.Property<string>("NombresClientes")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -44,7 +44,7 @@ namespace PrioridadesLor.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TelefonoCliente")
+                    b.Property<string>("TelefonoClientes")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -55,7 +55,7 @@ namespace PrioridadesLor.Migrations
 
             modelBuilder.Entity("PrioridadesLor.Models.Prioridades", b =>
                 {
-                    b.Property<int>("IdPrioridad")
+                    b.Property<int>("IdPrioridades")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -66,29 +66,29 @@ namespace PrioridadesLor.Migrations
                     b.Property<int>("DiasCompromiso")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("IdPrioridad");
+                    b.HasKey("IdPrioridades");
 
                     b.ToTable("prioridades");
                 });
 
-            modelBuilder.Entity("PrioridadesLor.Models.Sistema", b =>
+            modelBuilder.Entity("PrioridadesLor.Models.Sistemas", b =>
                 {
-                    b.Property<int>("SistemaId")
+                    b.Property<int>("SistemasId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("SistemaNombre")
+                    b.Property<string>("SistemasNombres")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("SistemaId");
+                    b.HasKey("SistemasId");
 
-                    b.ToTable("sistema");
+                    b.ToTable("sistemas");
                 });
 
             modelBuilder.Entity("PrioridadesLor.Models.Tickets", b =>
                 {
-                    b.Property<int>("TicketdId")
+                    b.Property<int>("TicketsId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -96,7 +96,7 @@ namespace PrioridadesLor.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ClienteId")
+                    b.Property<int>("ClientesId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
@@ -106,17 +106,17 @@ namespace PrioridadesLor.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PrioridadId")
+                    b.Property<int>("PrioridadesId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("SistemaId")
+                    b.Property<int>("SistemasId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SolicitadoPor")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("TicketdId");
+                    b.HasKey("TicketsId");
 
                     b.ToTable("tickets");
                 });

@@ -1,23 +1,22 @@
-﻿@page "/Sistema"
-@page "/Sistema/{Id:int}"
+﻿@page "/Edit_Sistemas/{Id:int}"
 
 
 @rendermode InteractiveServer
 
-@inject SistemaServices sistemaServices
+@inject SistemasService sistemasService
 @inject NavigationManager navigationManager
 
-<PageTitle>Sistema</PageTitle>
+<PageTitle>Sistemas</PageTitle>
 
 
-<EditForm Model="@sistema" OnValidSubmit="@OnValidSubmit">
+<EditForm Model="@sistemas" OnValidSubmit="@OnValidSubmit">
 
     <DataAnnotationsValidator />   <DataAnnotationsValidator />
 
     <div class="container">
         <div class="card shadow-lg">
             <div class="card-header">
-                <h3> Registro de Sistema</h3>
+                <h3> Editar Sistema</h3>
 
                 <div class=card-body>
 
@@ -25,23 +24,23 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
                         <label>ID</label>
                         <div class="input-group mb-3">
-                            <InputNumber @bind-Value="@sistema.SistemaId" class=" form-control" aria-describedby="BotonBuscar" />
-                            <ValidationMessage For="@(() => sistema.SistemaId)" />
+                            <InputNumber @bind-Value="@sistemas.SistemasId" class=" form-control" aria-describedby="BotonBuscar" />
+                            <ValidationMessage For="@(() => sistemas.SistemasId)" />
                         </div>
                     </div>
 
                     @*Nombre*@
                     <label>Nombre</label>
                     <div class="input-group mb-3">
-                        <InputText @bind-Value="@sistema.SistemaNombre" class=" form-control" />
-                        <ValidationMessage For="@(() => sistema.SistemaNombre)" />
+                        <InputText @bind-Value="@sistemas.SistemasNombres" class=" form-control" />
+                        <ValidationMessage For="@(() => sistemas.SistemasNombres)" />
                     </div>
 
 
 
                     <div class="card-footer d-flex justify-content-center">
                         <div class="btn-group">
-                            <button class="btn btn-outline-success">@TextoBoton</button>
+                            <button class="btn btn-outline-success"> Guardar</button>
                             <a href="Consulta_Sistema" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
                         </div>
                     </div>
@@ -58,39 +57,30 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    public Sistema sistema { get; set; } = new Sistema();
-    string TextoBoton = string.Empty;
-    string Titulo = string.Empty;
+    public Sistemas sistemas { get; set; } = new Sistemas();
 
     protected override async Task OnInitializedAsync()
     {
         if (Id != 0)
         {
-            sistema = await sistemaServices.Buscar(Id);
-            TextoBoton = "Actualizar Cliente";
-            Titulo = "Editar Cliente";
-        }
-        else
-        {
-            TextoBoton = "Crear Cliente";
-            Titulo = "Nuevo Cliente";
+            sistemas = await sistemasService.Buscar(Id);
         }
     }
 
     public void Nuevo()
     {
-        sistema = new Sistema();
+        sistemas = new Sistemas();
     }
 
     private async void OnValidSubmit()
     {
 
-        if (await sistemaServices.Guardar(sistema))
+        if (await sistemasService.Guardar(sistemas))
         {
             Nuevo();
         }
 
-        navigationManager.NavigateTo("Consulta_Cliente");
+        navigationManager.NavigateTo("Consulta_Sistema");
     }
 
 }

@@ -1,13 +1,12 @@
-﻿@page "/Eliminar_Sistema"
-@page "/Eliminar_Sistema/{Id:int}"
+﻿@page "/Detalles_Sistema/{SistemasId:int}"
 
 @rendermode InteractiveServer
 
-@inject SistemaServices sistemaServices
+@inject SistemasService sistemaServices
 @inject NavigationManager navigationManager
 
 
-<PageTitle>Eliminar Clientes</PageTitle>
+<PageTitle>Sistema</PageTitle>
 
 <EditForm Model="@sistema" OnValidSubmit="@OnValidSubmit">
 
@@ -17,30 +16,27 @@
     <div class="container">
         <div class="card shadow-lg">
             <div class="card-header">
-                <h3> Eliminar Cliente</h3>
+                <h3> Detalles del Sistemas</h3>
 
                 <div class=card-body>
 
                     @*Sistema ID*@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
-                        <h3><strong>¿Est&aacute;s seguro de que quieres eliminar este Sistema?</strong></h3>
-
                         <h4>
                             <strong>ID:</strong>
-                            @sistema.SistemaId
+                            @sistema.SistemasId
                         </h4>
                     </div>
 
                     @*Nombre*@
                     <h4>
                         <strong>Nombre: </strong>
-                        @sistema.SistemaNombre
+                        @sistema.SistemasNombres
                     </h4>
 
 
                     <div class="card-footer d-flex justify-content-center">
                         <div class="btn-group">
-                            <button class="btn btn-outline-danger">@TextoBoton</button>
                             <a href="Consulta_Sistema" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
                         </div>
                     </div>
@@ -56,8 +52,8 @@
 
 
 @code {
-    [Parameter] public int Id { get; set; }
-    public Sistema sistema { get; set; } = new Sistema();
+    [Parameter] public int SistemasId { get; set; }
+    public Sistemas sistema { get; set; } = new Sistemas();
     string TextoBoton = string.Empty;
     string Titulo = string.Empty;
 
@@ -65,29 +61,24 @@
     {
 
 
-        if (Id != 0)
+        if (SistemasId != 0)
         {
-            sistema = await sistemaServices.Buscar(Id);
+            sistema = await sistemaServices.Buscar(SistemasId);
             TextoBoton = "Eliminar";
-            Titulo = "Eliminar Cliente";
-        }
-        else
-        {
-            TextoBoton = "Crear Cliente";
-            Titulo = "Nuevo Cliente";
+            Titulo = "Eliminar Clientes";
         }
     }
 
     public void Nuevo()
     {
-        sistema = new Sistema();
+        sistema = new Sistemas();
     }
 
     private async void OnValidSubmit()
     {
 
 
-        if (Id != 0)
+        if (SistemasId != 0)
         {
             await sistemaServices.Eliminar(sistema);
             Nuevo();

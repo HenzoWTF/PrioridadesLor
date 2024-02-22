@@ -1,16 +1,16 @@
 ﻿@page "/Consulta_Sistema"
 
 @rendermode InteractiveServer
-@inject SistemaServices sistemaServices
+@inject SistemasService sistemaServices
 @inject NavigationManager navigationManager
 
-<PageTitle>Consulta de sistema</PageTitle>
+<PageTitle>Consulta de sistemas</PageTitle>
 
-<h1>Consulta de sistema</h1>
+<h1>Consulta de sistemas</h1>
 
 
 <div>
-    <a href="/Sistema">Crear Cliente</a>
+    <a href="/Sistemas">Crear Sistemas</a>
 </div>
 
 <table class="table">
@@ -36,11 +36,12 @@
             @foreach (var Sistema in sistema)
             {
                 <tr>
-                    <td>@Sistema.SistemaId</td>
-                    <td>@Sistema.SistemaNombre</td>
+                    <td>@Sistema.SistemasId</td>
+                    <td>@Sistema.SistemasNombres</td>
                     <td>
-                        <a href="/Sistema/@Sistema.SistemaId"><i class="bi bi-pencil-square" /></a>
-                        <a href="/Eliminar_Sistema/@Sistema.SistemaId" class="link-danger"><i class="bi bi-trash" /></a>
+                        <a href="/Edit_Sistemas/@Sistema.SistemasId"><i class="bi bi-pencil-square" /></a>
+                        <a href="/Detalles_Sistema/@Sistema.SistemasId"><i class="bi bi-eye-fill"/></a>
+                        <a href="/Eliminar_Sistema/@Sistema.SistemasId" class="link-danger"><i class="bi bi-trash" /></a>
                     </td>
                 </tr>
 
@@ -51,8 +52,8 @@
 
 
 @code {
-    public List<Sistema> sistema { get; set; } = new List<Sistema>();
-    public Sistema SistemaS { get; set; } = new Sistema();
+    public List<Sistemas> sistema { get; set; } = new List<Sistemas>();
+    public Sistemas SistemaS { get; set; } = new Sistemas();
 
     protected override async Task OnInitializedAsync()
     {
@@ -61,7 +62,7 @@
 
     public async void Buscar()
     {
-        var clienteEncontrado = await sistemaServices.Buscar(SistemaS.SistemaId);
+        var clienteEncontrado = await sistemaServices.Buscar(SistemaS.SistemasId);
         if (clienteEncontrado != null)
             SistemaS = clienteEncontrado;
         else
@@ -72,6 +73,6 @@
 
     public void Nuevo()
     {
-        SistemaS = new Sistema();
+        SistemaS = new Sistemas();
     }
 }

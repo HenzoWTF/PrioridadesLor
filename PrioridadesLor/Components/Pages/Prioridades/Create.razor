@@ -1,0 +1,81 @@
+﻿@page "/Prioridad"
+
+@rendermode InteractiveServer
+
+@inject PrioridadesService prioridadesService
+@inject NavigationManager navigationManager
+
+<PageTitle>Prioridad</PageTitle>
+
+
+<EditForm Model="@prioridades" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator /><DataAnnotationsValidator />
+
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3>Registro de Prioriodad</h3>
+
+                <div class="card-body">
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <label>ID</label>
+                        <div class="input-group mb-3">
+                            <InputNumber @bind-Value="@prioridades.IdPrioridades" class=" form-control" />
+                            <ValidationMessage For="@(() => prioridades.IdPrioridades)" />
+                        </div>
+                    </div>
+
+
+                    <label>Descripci&oacuten</label>
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="@prioridades.Descripcion" class=" form-control" />
+                        <ValidationMessage For="@(() => prioridades.Descripcion)" />
+                    </div>
+
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <label>D&iacuteas compromiso</label>
+                        <div class="input-group mb-3">
+                            <InputNumber @bind-Value="@prioridades.DiasCompromiso" class=" form-control" />
+                            <ValidationMessage For="@(() => prioridades.DiasCompromiso)" />
+                        </div>
+                    </div>
+
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <button class="btnn btn-outline-success"><i class="bi bi-floppy-fill " /> Guardar</button>
+                            <a href="Consulta_Prioridades" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</EditForm>
+
+@code {
+    [Parameter]public int id { get; set; }
+    public Prioridades prioridades = new Prioridades();
+
+    public void Nuevo()
+    {
+        prioridades = new Prioridades();
+    }
+
+    private async void OnValidSubmit()
+    {
+        if (await prioridadesService.Guardar(prioridades))
+        {
+            Nuevo();
+        }
+
+        navigationManager.NavigateTo("Consulta_Prioridades");
+    }
+}

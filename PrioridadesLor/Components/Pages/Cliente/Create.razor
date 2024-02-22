@@ -1,16 +1,15 @@
-﻿@page "/Cliente"
-@page "/Cliente/{Id:int}"
+﻿@page "/Clientes"
 
 
 @rendermode InteractiveServer
 
-@inject ClientesServices clientesServices
+@inject ClientesService clientesService
 @inject NavigationManager navigationManager
 
 <PageTitle>Clientes</PageTitle>
 
 
-<EditForm Model="@clientes" OnValidSubmit="@OnValidSubmit">
+<EditForm Model="@clientes" OnValidSubmit="@Guardar">
 
     <DataAnnotationsValidator />   <DataAnnotationsValidator />
 
@@ -33,22 +32,22 @@
                     @*Nombre*@
                     <label>Nombre</label>
                     <div class="input-group mb-3">
-                        <InputText @bind-Value="@clientes.NombreCliente" class=" form-control" />
-                        <ValidationMessage For="@(() => clientes.NombreCliente)" />
+                        <InputText @bind-Value="@clientes.NombresClientes" class=" form-control" />
+                        <ValidationMessage For="@(() => clientes.NombresClientes)" />
                     </div>
 
                     @*Telefono*@
                     <label>Telefono</label>
                     <div class="input-group mb-3">
-                        <InputText type="cel" @bind-Value="@clientes.TelefonoCliente" class=" form-control" aria-describedby="TelefonoCliente" placeholder="Telefono" />
-                        <ValidationMessage For="@(() => clientes.TelefonoCliente)" />
+                        <InputText type="cel" @bind-Value="@clientes.TelefonoClientes" class=" form-control" aria-describedby="TelefonoCliente" placeholder="Telefono" />
+                        <ValidationMessage For="@(() => clientes.TelefonoClientes)" />
                     </div>
 
                     @*Celular*@
                     <label>Celular</label>
                     <div class="input-group mb-3">
-                        <InputText type="cel" @bind-Value="@clientes.CelularCliente" class="form-control" aria-describedby="CelularCliente" placeholder="Celular" />
-                        <ValidationMessage For="@(() => clientes.CelularCliente)" />
+                        <InputText type="cel" @bind-Value="@clientes.CelularClientes" class="form-control" aria-describedby="CelularCliente" placeholder="Celular" />
+                        <ValidationMessage For="@(() => clientes.CelularClientes)" />
                     </div>
 
                     @*RNC*@
@@ -62,19 +61,19 @@
                     @*Email*@
                     <label>Email</label>
                     <div class="input-group mb-3">
-                        <InputText type="email" @bind-Value="@clientes.EmailCliente" class="form-control" aria-describedby="Email" placeholder="Email" />
+                        <InputText type="email" @bind-Value="@clientes.EmailClientes" class="form-control" aria-describedby="Email" placeholder="Email" />
                     </div>
 
                     @*Direccion*@
                     <label>Direcci&oacuten</label>
                     <div class="input-group mb-3">
-                        <InputText @bind-Value="@clientes.DireccionCliente" class="form-control" aria-describedby="Direccion" placeholder="Dirección" />
+                        <InputText @bind-Value="@clientes.DireccionClientes" class="form-control" aria-describedby="Direccion" placeholder="Dirección" />
                     </div>
 
 
                     <div class="card-footer d-flex justify-content-center">
                         <div class="btn-group">
-                            <button class="btn btn-outline-success">@TextoBoton</button>
+                            <button class="btn btn-outline-success"><i class="bi bi-floppy-fill " /> Guardar</button>
                             <a href="Consulta_Cliente" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
                         </div>
                     </div>
@@ -91,34 +90,17 @@
 
 @code {
     [Parameter] public int Id { get; set; }
-    public Cliente clientes { get; set; } = new Cliente();
-    string TextoBoton = string.Empty;
-    string Titulo = string.Empty;
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (Id != 0)
-        {
-            clientes = await clientesServices.Buscar(Id);
-            TextoBoton = "Actualizar Cliente";
-            Titulo = "Editar Cliente";
-        }
-        else
-        {
-            TextoBoton = "Crear Cliente";
-            Titulo = "Nuevo Cliente";
-        }
-    }
+    public Clientes clientes { get; set; } = new Clientes();
 
     public void Nuevo()
     {
-        clientes = new Cliente();
+        clientes = new Clientes();
     }
 
-    private async void OnValidSubmit()
+    private async void Guardar()
     {
 
-        if (await clientesServices.Guardar(clientes))
+        if (await clientesService.Guardar(clientes))
         {
             Nuevo();
         }

@@ -1,15 +1,15 @@
-﻿@page "/Eliminar_CLiente"
-@page "/Eliminar_CLiente/{Id:int}"
+﻿@page "/Detalles_CLiente"
+@page "/Detalle_CLiente/{CliestesId:int}"
 
 @rendermode InteractiveServer
 
-@inject ClientesServices clientesServices
+@inject ClientesService clientesService
 @inject NavigationManager navigationManager
 
 
-<PageTitle>Eliminar Clientes</PageTitle>
+<PageTitle>Detalles del Clientes</PageTitle>
 
-<EditForm Model="@clientes" OnValidSubmit="@OnValidSubmit">
+<EditForm Model="@clientes" OnValidSubmit="@OnInitializedAsync">
 
     <DataAnnotationsValidator />   <DataAnnotationsValidator />
     <a href="" class="btn btn-outline-primary">Inicio</a>
@@ -17,11 +17,9 @@
     <div class="container">
         <div class="card shadow-lg">
             <div class="card-header">
-                <h3> Eliminar Cliente</h3>
+                <h3> Detalles del Cliente</h3>
 
                 <div class=card-body>
-                    <h3><strong>¿Est&aacute;s seguro de que quieres eliminar este cliente?</strong></h3>
-
 
                     @*Clientes ID*@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
@@ -34,20 +32,20 @@
                     @*Nombre*@
                     <h4>
                         <strong>Nombre: </strong>
-                        @clientes.NombreCliente
+                        @clientes.NombresClientes
                     </h4>
 
                     @*Telefono*@
                     <h4>
-                        <strong>Telefono: </strong>
-                        @clientes.TelefonoCliente
+                        <strong>Tel&eacute;fono: </strong>
+                        @clientes.TelefonoClientes
 
                     </h4>
 
                     @*Celular*@
                     <h4>
                         <strong>Celular: </strong>
-                        @clientes.CelularCliente
+                        @clientes.CelularClientes
                     </h4>
 
                     @*RNC*@
@@ -59,18 +57,17 @@
                     @*Email*@
                     <h4>
                         <strong>Email: </strong>
-                        @clientes.EmailCliente
+                        @clientes.EmailClientes
                     </h4>
 
                     @*Direccion*@
                     <h4>
                         <strong>Direcci&oacuten: </strong>
-                        @clientes.DireccionCliente
+                        @clientes.DireccionClientes
                     </h4>
 
                     <div class="card-footer d-flex justify-content-center">
                         <div class="btn-group">
-                            <button class="btn btn-outline-danger">@TextoBoton</button>
                             <a href="Consulta_Cliente" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
                         </div>
                     </div>
@@ -86,8 +83,8 @@
 
 
 @code {
-    [Parameter] public int Id { get; set; }
-    public Cliente clientes { get; set; } = new Cliente();
+    [Parameter] public int CliestesId { get; set; }
+    public Clientes clientes { get; set; } = new Clientes();
     string TextoBoton = string.Empty;
     string Titulo = string.Empty;
 
@@ -95,27 +92,10 @@
     {
 
 
-        if (Id != 0)
+        if (CliestesId != 0)
         {
-            clientes = await clientesServices.Buscar(Id);
-            TextoBoton = "Eliminar";
-            Titulo = "Eliminar Cliente";
+            clientes = await clientesService.Buscar(CliestesId);
         }
     }
 
-    public void Nuevo()
-    {
-        clientes = new Cliente();
-    }
-
-    private async void OnValidSubmit()
-    {
-        if (Id != 0)
-        {
-            await clientesServices.Eliminar(clientes);
-            Nuevo();
-        }
-
-        navigationManager.NavigateTo("Consulta_Cliente");
-    }
 }

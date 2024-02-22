@@ -1,15 +1,14 @@
-﻿@page "/Eliminar_Ticket"
-@page "/Eliminar_Ticket/{Id:int}"
+﻿@page "/Eliminar_Ticket/{TicketsId:int}"
 
 @rendermode InteractiveServer
 
-@inject TicketsServices ticketServices
+@inject TicketsService ticketsService
 @inject NavigationManager navigationManager
 
 
 <PageTitle>Eliminar Ticket</PageTitle>
 
-<EditForm Model="@ticket" OnValidSubmit="@OnValidSubmit">
+<EditForm Model="@tickets" OnValidSubmit="@OnValidSubmit">
 
     <DataAnnotationsValidator />   <DataAnnotationsValidator />
     <a href="" class="btn btn-outline-primary">Inicio</a>
@@ -17,7 +16,7 @@
     <div class="container">
         <div class="card shadow-lg">
             <div class="card-header">
-                <h3> Eliminar Cliente</h3>
+                <h3> Eliminar Ticket</h3>
 
                 <div class=card-body>
                     <h3><strong>¿Est&aacute;s seguro de que quieres eliminar este ticket?</strong></h3>
@@ -26,40 +25,35 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
                         <h4>
                             <strong>ID:</strong>
-                            @ticket.TicketdId
+                            @tickets.TicketsId
                         </h4>
                     </div>
 
                     <h4>
                         <strong>Fecha: </strong>
-                        @ticket.Fecha
+                        @tickets.Fecha
                     </h4>
 
                     <h4>
                         <strong>Solicitado Por: </strong>
-                        @ticket.SolicitadoPor
+                        @tickets.SolicitadoPor
 
                     </h4>
 
                     <h4>
                         <strong>Descripci&oacute;n: </strong>
-                        @ticket.Descripcion
+                        @tickets.Descripcion
                     </h4>
 
                     <h4>
                         <strong>Asunto: </strong>
-                        @ticket.Asunto
+                        @tickets.Asunto
                     </h4>
-
-
-
-
-
 
 
                     <div class="card-footer d-flex justify-content-center">
                         <div class="btn-group">
-                            <button class="btn btn-outline-danger">@TextoBoton</button>
+                            <button class="btn btn-outline-danger"><i class="bi bi-trash"/> Eliminar</button>
                             <a href="Consulta_Ticket" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
                         </div>
                     </div>
@@ -75,35 +69,31 @@
 
 
 @code {
-    [Parameter] public int Id { get; set; }
-    public Tickets ticket { get; set; } = new Tickets();
-    string TextoBoton = string.Empty;
-    string Titulo = string.Empty;
+    [Parameter] public int TicketsId { get; set; }
+    public Tickets tickets { get; set; } = new Tickets();
 
     protected override async Task OnInitializedAsync()
     {
 
 
-        if (Id != 0)
+        if (TicketsId != 0)
         {
-            ticket = await ticketServices.Buscar(Id);
-            TextoBoton = "Eliminar";
-            Titulo = "Eliminar Cliente";
+            tickets = await ticketsService.Buscar(TicketsId);
         }
     }
 
     public void Nuevo()
     {
-        ticket = new Tickets();
+        tickets = new Tickets();
     }
 
     private async void OnValidSubmit()
     {
 
 
-        if (Id != 0)
+        if (TicketsId != 0)
         {
-            await ticketServices.Eliminar(ticket);
+            await ticketsService.Eliminar(tickets);
             Nuevo();
         }
 

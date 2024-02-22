@@ -1,0 +1,89 @@
+﻿@page "/Detalles_Prioridad/{prioridadesId:int}"
+
+@rendermode InteractiveServer
+@inject PrioridadesService prioridadesService
+@inject NavigationManager navigationManager
+
+
+
+
+<EditForm Model="@prioridades" OnValidSubmit="@OnValidSubmit">
+
+    <DataAnnotationsValidator />   <DataAnnotationsValidator />
+    <a href="" class="btn btn-outline-primary">Inicio</a>
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3> Detalles de la Prioridad</h3>
+
+                <div class=card-body>
+                    @*Prioridad ID*@
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <h4>
+                            <strong>ID:</strong>
+                            @prioridades.IdPrioridades
+                        </h4>
+                    </div>
+
+                    @*Descipcion*@
+                    <h4>
+                        <strong>Descripci&oacuten: </strong>
+                        @prioridades.Descripcion
+                    </h4>
+
+                    @*Dias Compromiso*@
+                    <h4>
+                        <strong>D&iacuteas compromiso </strong>
+                        @prioridades.DiasCompromiso
+
+                    </h4>
+
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <a href="Consulta_Prioridades" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</EditForm>
+
+
+
+
+
+
+@code {
+    [Parameter] public int prioridadesId { get; set; }
+    public Prioridades prioridades = new Prioridades();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (prioridadesId != 0)
+        {
+            prioridades = await prioridadesService.Buscar(prioridadesId);
+        }
+    }
+
+    public void Nuevo()
+    {
+        prioridades = new Prioridades();
+    }
+
+    private async void OnValidSubmit()
+    {
+        if (prioridadesId != 0)
+        {
+            await prioridadesService.Eliminar(prioridades);
+            Nuevo();
+        }
+        navigationManager.NavigateTo("Consulta_Prioridades");
+    }
+}

@@ -1,7 +1,7 @@
 ﻿@page "/Consulta_Ticket"
 
 @rendermode InteractiveServer
-@inject TicketsServices ticketsServices
+@inject TicketsService ticketsService
 @inject NavigationManager navigationManager
 
 <PageTitle>Consulta de Tickets</PageTitle>
@@ -31,7 +31,7 @@
 
     <tbody class="table-sm">
 
-        @if (ticket.Count == 0)
+        @if (tickets.Count == 0)
         {
             @: No existe registros
         }
@@ -39,20 +39,21 @@
         {
 
             @*Cuerpo de la tabla*@
-            @foreach (var Tickets in ticket)
+            @foreach (var Tickets in tickets)
             {
                 <tr>
-                    <td>@Tickets.TicketdId</td>
+                    <td>@Tickets.TicketsId</td>
                     <td>@Tickets.Fecha</td>
                     <td>@Tickets.SolicitadoPor</td>
-                    <td>@Tickets.ClienteId</td>
-                    <td>@Tickets.SistemaId</td>
+                    <td>@Tickets.ClientesId</td>
+                    <td>@Tickets.SistemasId</td>
                     <td>@Tickets.Descripcion</td>
-                    <td>@Tickets.PrioridadId</td>
+                    <td>@Tickets.PrioridadesId</td>
                     <td>@Tickets.Asunto</td>
                     <td>
-                        <a href="/Ticket/@Tickets.TicketdId"><i class="bi bi-pencil-square" /></a>
-                        <a href="/Eliminar_Ticket/@Tickets.TicketdId" class="link-danger"><i class="bi bi-trash" /></a>
+                        <a href="/Edi_Ticket/@Tickets.TicketsId"><i class="bi bi-pencil-square" /></a>
+                        <a href="/Detalles_Ticket/@Tickets.TicketsId"><i class="bi bi-eye-fill" /></a>
+                        <a href="/Eliminar_Ticket/@Tickets.TicketsId" class="link-danger"><i class="bi bi-trash" /></a>
                     </td> 
                 </tr>
 
@@ -63,18 +64,18 @@
 
 
 @code {
-    public List<Tickets> ticket { get; set; } = new List<Tickets>();
+    public List<Tickets> tickets { get; set; } = new List<Tickets>();
     public Tickets TicketsT { get; set; } = new Tickets();
 
     protected override async Task OnInitializedAsync()
     {
 
-        ticket = await ticketsServices.Listar(c => true);
+        tickets = await ticketsService.Listar(c => true);
     }
 
     public async void Buscar()
     {
-        var TicketEncontrado = await ticketsServices.Buscar(TicketsT.TicketdId);
+        var TicketEncontrado = await ticketsService.Buscar(TicketsT.TicketsId);
         if (TicketEncontrado != null)
             TicketsT = TicketEncontrado;
         else

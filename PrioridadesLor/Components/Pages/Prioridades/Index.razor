@@ -1,7 +1,7 @@
 ﻿@page "/Consulta_Prioridades"
 
 @rendermode InteractiveServer
-@inject PrioridadesServices prioridadesServices
+@inject PrioridadesService prioridadesServices
 @inject NavigationManager navigationManager
 
 <PageTitle>Consulta de Prioridades</PageTitle>
@@ -32,12 +32,13 @@
         @foreach (var Prioridades in prioridades)
         {
             <tr>
-                <td>@Prioridades.IdPrioridad</td>
+                <td>@Prioridades.IdPrioridades</td>
                 <td>@Prioridades.Descripcion</td>
                 <td>@Prioridades.DiasCompromiso</td>
                 <td>
-                    <a href="/Prioridad/@Prioridades.IdPrioridad"><i class="bi bi-pencil-square" /></a>
-                    <a href="/Eliminar_Prioridad/@Prioridades.IdPrioridad" class="link-danger"><i class="bi bi-trash" /></a>
+                    <a href="/EditPrioridad/@Prioridades.IdPrioridades"><i class="bi bi-pencil-square" /></a>
+                    <a href="/Detalles_Prioridad/@Prioridades.IdPrioridades"><i class="bi bi-eye-fill" /></a>
+                    <a href="/Eliminar_Prioridad/@Prioridades.IdPrioridades" class="link-danger"><i class="bi bi-trash" /></a>
                 </td>
             </tr>
 
@@ -62,7 +63,7 @@
 
     public async void Buscar()
     {
-        var PrioridadEncontrado = await prioridadesServices.Buscar(PrioridadesP.IdPrioridad);
+        var PrioridadEncontrado = await prioridadesServices.Buscar(PrioridadesP.IdPrioridades);
         if (PrioridadEncontrado != null)
             PrioridadesP = PrioridadEncontrado;
         else

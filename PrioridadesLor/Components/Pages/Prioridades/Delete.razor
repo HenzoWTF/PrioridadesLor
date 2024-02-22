@@ -1,8 +1,7 @@
-﻿@page "/Eliminar_Prioridad"
-@page "/Eliminar_Prioridad/{id:int}"
+﻿@page "/Eliminar_Prioridad/{prioridadesId:int}"
 
 @rendermode InteractiveServer
-@inject PrioridadesServices prioridadesServices
+@inject PrioridadesService prioridadesService
 @inject NavigationManager navigationManager
 
 
@@ -25,7 +24,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
                         <h4>
                             <strong>ID:</strong>
-                            @prioridades.IdPrioridad
+                            @prioridades.IdPrioridades
                         </h4>
                     </div>
 
@@ -45,7 +44,7 @@
 
                     <div class="card-footer d-flex justify-content-center">
                         <div class="btn-group">
-                            <button class="btn btn-outline-danger">@TextoBoton</button>
+                            <button class="btn btn-outline-danger"><i class="bi bi-trash-fill " /> @TextoBoton</button>
                             <a href="Consulta_Prioridades" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
                         </div>
                     </div>
@@ -65,23 +64,23 @@
 
 
 @code {
-    [Parameter] public int id { get; set; }
+    [Parameter] public int prioridadesId { get; set; }
     public Prioridades prioridades = new Prioridades();
     string TextoBoton = string.Empty;
     string titulo = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        if (id != 0)
+        if (prioridadesId != 0)
         {
-            prioridades = await prioridadesServices.Buscar(id);
+            prioridades = await prioridadesService.Buscar(prioridadesId);
             TextoBoton = "Eliminar";
-            titulo = "Eliminar Cliente";
+            titulo = "Eliminar Clientes";
         }
         else
         {
-            TextoBoton = "Crear Cliente";
-            titulo = "Nuevo Cliente";
+            TextoBoton = "Crear Clientes";
+            titulo = "Nuevo Clientes";
         }
     }
 
@@ -92,9 +91,9 @@
 
     private async void OnValidSubmit()
     {
-        if (id != 0)
+        if (prioridadesId != 0)
         {
-            await prioridadesServices.Eliminar(prioridades);
+            await prioridadesService.Eliminar(prioridades);
             Nuevo();
         }
         navigationManager.NavigateTo("Consulta_Prioridades");

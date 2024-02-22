@@ -1,7 +1,7 @@
 ﻿@page "/Consulta_Cliente"
 
 @rendermode InteractiveServer
-@inject ClientesServices clientesServices
+@inject ClientesService clientesServices
 @inject NavigationManager navigationManager
 
 <PageTitle>Consulta de Clientes</PageTitle>
@@ -10,7 +10,7 @@
 
 
 <div>
-    <a href="/Clientes">Crear Cliente</a>
+    <a href="/Clientes">Agregar Cliente</a>
 </div>
 
 <table class="table">
@@ -42,14 +42,15 @@
             {
                 <tr>
                     <td>@Clientes.ClientesID</td>
-                    <td>@Clientes.NombreCliente</td>
-                    <td>@Clientes.TelefonoCliente</td>
-                    <td>@Clientes.CelularCliente</td>
+                    <td>@Clientes.NombresClientes</td>
+                    <td>@Clientes.TelefonoClientes</td>
+                    <td>@Clientes.CelularClientes</td>
                     <td>@Clientes.RNC</td>
-                    <td>@Clientes.EmailCliente</td>
-                    <td>@Clientes.DireccionCliente</td>
+                    <td>@Clientes.EmailClientes</td>
+                    <td>@Clientes.DireccionClientes</td>
                     <td>
-                        <a href="/Cliente/@Clientes.ClientesID"><i class="bi bi-pencil-square" /></a>
+                        <a href="/EditClientes/@Clientes.ClientesID"><i class="bi bi-pencil-square" /></a>
+                        <a href="/Detalle_CLiente/@Clientes.ClientesID"><i class="bi bi-eye-fill"/></a>
                         <a href="/Eliminar_CLiente/@Clientes.ClientesID" class="link-danger"><i class="bi bi-trash" /></a>
                     </td>
                 </tr>
@@ -61,8 +62,8 @@
 
 
 @code {
-    public List<Cliente> clientes { get; set; } = new List<Cliente>();
-    public Cliente ClientesC { get; set; } = new Cliente();
+    public List<Clientes> clientes { get; set; } = new List<Clientes>();
+    public Clientes ClientesC { get; set; } = new Clientes();
 
     protected override async Task OnInitializedAsync()
     {
@@ -82,6 +83,6 @@
 
     public void Nuevo()
     {
-        ClientesC = new Cliente();
+        ClientesC = new Clientes();
     }
 }

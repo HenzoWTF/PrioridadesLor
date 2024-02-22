@@ -1,0 +1,87 @@
+﻿@page "/Detalles_Ticket/{TicketsId:int}"
+
+@rendermode InteractiveServer
+
+@inject TicketsService ticketsService
+@inject NavigationManager navigationManager
+
+
+<PageTitle>Detalles del Ticket</PageTitle>
+
+<EditForm Model="@tickets" OnValidSubmit="@OnInitializedAsync">
+
+    <DataAnnotationsValidator />   <DataAnnotationsValidator />
+    <a href="" class="btn btn-outline-primary">Inicio</a>
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3> Detalles del Cliente</h3>
+
+                <div class=card-body>
+
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <h4>
+                            <strong>ID:</strong>
+                            @tickets.TicketsId
+                        </h4>
+                    </div>
+
+                    <h4>
+                        <strong>Fecha: </strong>
+                        @tickets.Fecha
+                    </h4>
+
+                    <h4>
+                        <strong>Solicitado Por: </strong>
+                        @tickets.SolicitadoPor
+
+                    </h4>
+
+                    <h4>
+                        <strong>Descripci&oacute;n: </strong>
+                        @tickets.Descripcion
+                    </h4>
+
+                    <h4>
+                        <strong>Asunto: </strong>
+                        @tickets.Asunto
+                    </h4>
+
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <a href="Consulta_Ticket" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</EditForm>
+
+
+@code {
+    [Parameter] public int TicketsId { get; set; }
+    public Tickets tickets { get; set; } = new Tickets();
+    string TextoBoton = string.Empty;
+    string Titulo = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (TicketsId != 0)
+        {
+            tickets = await ticketsService.Buscar(TicketsId);
+        }
+    }
+
+    public void Nuevo()
+    {
+        tickets = new Tickets();
+    }
+
+}
