@@ -1,0 +1,88 @@
+﻿@page "/Eliminar_Sistema/{SistemasId:int}"
+
+@rendermode InteractiveServer
+
+@inject SistemasService sistemaServices
+@inject NavigationManager navigationManager
+
+
+<PageTitle>Eliminar Clientes</PageTitle>
+
+<EditForm Model="@sistema" OnValidSubmit="@OnValidSubmit">
+
+    <DataAnnotationsValidator />   <DataAnnotationsValidator />
+    <a href="" class="btn btn-outline-primary">Inicio</a>
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3> Eliminar Cliente</h3>
+
+                <div class=card-body>
+
+                    @*Sistema ID*@
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <h3><strong>¿Est&aacute;s seguro de que quieres eliminar este Sistema?</strong></h3>
+
+                        <h4>
+                            <strong>ID:</strong>
+                            @sistema.SistemasId
+                        </h4>
+                    </div>
+
+                    @*Nombre*@
+                    <h4>
+                        <strong>Nombre: </strong>
+                        @sistema.SistemasNombres
+                    </h4>
+
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <button class="btn btn-outline-danger"><i class="bi bi-trash"/> Eliminar</button>
+                            <a href="Consulta_Sistema" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</EditForm>
+
+
+@code {
+    [Parameter] public int SistemasId { get; set; }
+    public Sistemas sistema { get; set; } = new Sistemas();
+    string TextoBoton = string.Empty;
+    string Titulo = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (SistemasId != 0)
+        {
+            sistema = await sistemaServices.Buscar(SistemasId);
+            TextoBoton = "Eliminar";
+            Titulo = "Eliminar Clientes";
+        }
+    }
+
+    public void Nuevo()
+    {
+        sistema = new Sistemas();
+    }
+
+    private async void OnValidSubmit()
+    {
+        if (SistemasId != 0)
+        {
+            await sistemaServices.Eliminar(sistema);
+            Nuevo();
+        }
+
+        navigationManager.NavigateTo("Consulta_Sistema");
+    }
+}

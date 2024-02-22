@@ -1,0 +1,86 @@
+﻿@page "/Edit_Sistemas/{Id:int}"
+
+
+@rendermode InteractiveServer
+
+@inject SistemasService sistemasService
+@inject NavigationManager navigationManager
+
+<PageTitle>Sistemas</PageTitle>
+
+
+<EditForm Model="@sistemas" OnValidSubmit="@OnValidSubmit">
+
+    <DataAnnotationsValidator />   <DataAnnotationsValidator />
+
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h3> Editar Sistema</h3>
+
+                <div class=card-body>
+
+                    @*Clientes ID*@
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                        <label>ID</label>
+                        <div class="input-group mb-3">
+                            <InputNumber @bind-Value="@sistemas.SistemasId" class=" form-control" aria-describedby="BotonBuscar" />
+                            <ValidationMessage For="@(() => sistemas.SistemasId)" />
+                        </div>
+                    </div>
+
+                    @*Nombre*@
+                    <label>Nombre</label>
+                    <div class="input-group mb-3">
+                        <InputText @bind-Value="@sistemas.SistemasNombres" class=" form-control" />
+                        <ValidationMessage For="@(() => sistemas.SistemasNombres)" />
+                    </div>
+
+
+
+                    <div class="card-footer d-flex justify-content-center">
+                        <div class="btn-group">
+                            <button class="btn btn-outline-success"> Guardar</button>
+                            <a href="Consulta_Sistema" class="btn btn-outline-primary"><i class="bi bi-arrow-left" /> Volver</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</EditForm>
+
+
+@code {
+    [Parameter] public int Id { get; set; }
+    public Sistemas sistemas { get; set; } = new Sistemas();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != 0)
+        {
+            sistemas = await sistemasService.Buscar(Id);
+        }
+    }
+
+    public void Nuevo()
+    {
+        sistemas = new Sistemas();
+    }
+
+    private async void OnValidSubmit()
+    {
+
+        if (await sistemasService.Guardar(sistemas))
+        {
+            Nuevo();
+        }
+
+        navigationManager.NavigateTo("Consulta_Sistema");
+    }
+
+}
